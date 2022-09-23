@@ -1,6 +1,7 @@
 import { Route, Routes, NavLink, BrowserRouter, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
+import SubmitArticle from './pages/SubmitArticle';
 import './App.css';
 
 function App() {
@@ -10,11 +11,13 @@ function App() {
           <h1>Software Practice Empirical Evidence Database (SPEED)</h1>
             <ul className="header">
               <li><NavLink exact to = "/">Home</NavLink></li>
+              <li><NavLink exact to = "/submit">Submit Article</NavLink></li>
             </ul>
           <div className="content">
             <Routes>
               <Route exact path='/' element={<Home/>}/>
               <Route exact path="/404" element={<NotFound/>}/>
+              <Route exact path="/submit" element={<SubmitArticle/>}/>
               <Route path="*" element={<Navigate to="/404" replace />}/>
             </Routes>
           </div>
