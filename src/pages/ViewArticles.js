@@ -6,7 +6,6 @@ export default function ViewArticles() {
     //currently using useEffect to get the articles from the collection without useing express.js
     //currently displays the messages to the article page when serached with the correct data
 
-
     const [title, setTitle] = useState("");
     const [article, setArticle] = useState([]);  
     const [submitted, setSubmitted] = useState("");
