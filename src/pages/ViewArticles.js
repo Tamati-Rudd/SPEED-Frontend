@@ -1,35 +1,36 @@
 import { React, useEffect, useState } from 'react';
 import { ViewArticle } from '../Express';
+import axios from 'axios';
 
 export default function ViewArticles() {
-  // need to find how to retrieve data from database and display it
-  // currerntly there is no retrieve 
-  // so far the connection from backend is not retrieveing the data from the collection this can be seen in the "inspect" on (browser)
-  // following this there needs to be a clear display of data to the page 
-  // currently there is nothing that display the data to the page
+    //currently using useEffect to get the articles from the collection without useing express.js
+    //currently displays the messages to the article page when serached with the correct data
+
+
     const [title, setTitle] = useState("");
+    const [article, setArticle] = useState([]);  
     const [submitted, setSubmitted] = useState("");
 
     useEffect(() => {
-        console.log(title);
-    }, [title])
+        const getArticle = async() =>{
+            const res = await axios.get(`http://localhost:4000/articles/view/${submitted}`); //location of the article and submitted is the input from the user
+            setArticle(res.data);
+        }
+        getArticle();
+    }, [submitted])
 
-    const onChangeTitle = (event) => {
+       const onChangeTitle = (event) => {
         setTitle(event.target.value);
     }
 
-    const onClickSubmit = () => {
-        let result = ViewArticle(title).then(() => {
-            console.log(result);
-            setSubmitted(title); //this is displayed when pressing the serach button
-        })
-        .catch(() => {
-            console.error("An error occured");
-            setSubmitted("An error occured while attempting to submit your article. Please try again later");
-        })
-        
+  
+    
+    const onClickSubmit = (e) => {
+        setSubmitted(title)
     }
-
+    
+// the article map is used to display each column on the data that is stored in the collection
+// note for columns that do not store data it will be displayed as empty currently
     return (
         <div>
             <form>
@@ -37,7 +38,8 @@ export default function ViewArticles() {
                 <input type="text" id="title" name="title" value={title} onChange={onChangeTitle}></input>
             </form>
             <button onClick={onClickSubmit}>Search</button> 
-            <p>{submitted}</p>
+            
+            <div >{submitted ? (article.map((a) => (<div key={a._id}>ID: {a._id}, TITLE: {a.title}</div>))) : (<p>awaiting search</p>)}</div>
         </div>
     )
 }
