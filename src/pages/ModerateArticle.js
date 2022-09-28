@@ -2,7 +2,12 @@ import { React, useEffect, useState } from 'react';
 import { moderateArticle } from '../Express';
 
 export default function ModerateArticle() {
+<<<<<<< Updated upstream
     // testing page currently not working properly  
+=======
+    // testing page currently not working properly
+    
+>>>>>>> Stashed changes
     //so far backend can retrieve data 
     //needs to be displayed to the frontend on the viewarticle page
     //setSubmitted is the text that gets displayed
@@ -38,7 +43,11 @@ export default function ModerateArticle() {
                 <label htmlFor='title'>Title: </label>
                 <input type="text" id="title" name="title" value={title} onChange={onChangeTitle}></input>
             </form>
+<<<<<<< Updated upstream
             <button onClick={onClickSubmit}>Moderate</button> 
+=======
+            <button onClick={onClickSubmit}>Search</button> 
+>>>>>>> Stashed changes
             <p>{submitted}</p>
         </div>
     )
