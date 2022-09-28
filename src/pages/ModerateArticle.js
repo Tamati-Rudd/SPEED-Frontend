@@ -12,7 +12,7 @@ export default function ModerateArticle() {
 
     useEffect(() => {
         const getArticle = async() =>{
-            const res = await axios.get(`http://localhost:4000/articles/rejected\/${title}`); //location of the article and submitted is the input from the user
+            const res = await axios.get(`http://localhost:4000/articles/rejected/${title}`); //location of the article and submitted is the input from the user
             setArticle(res.data);
         }
         //ViewArticle(submitted);
