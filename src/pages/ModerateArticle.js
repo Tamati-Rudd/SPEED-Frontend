@@ -2,8 +2,7 @@ import { React, useEffect, useState } from 'react';
 import { moderateArticle } from '../Express';
 
 export default function ModerateArticle() {
-    // testing page currently not working properly
-    
+    // testing page currently not working properly  
     //so far backend can retrieve data 
     //needs to be displayed to the frontend on the viewarticle page
     //setSubmitted is the text that gets displayed
