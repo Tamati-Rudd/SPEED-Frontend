@@ -2,7 +2,7 @@ import { React, useEffect, useState } from 'react';
 //import { ViewArticle } from '../Express';// not sure how to use this
 import axios from 'axios';
 
-export default function ViewArticles() {
+export default function ModerateArticle() {
     //currently using useEffect to get the articles from the collection without useing express.js
     //currently displays the messages to the article page when serached with the correct data
 
@@ -12,7 +12,7 @@ export default function ViewArticles() {
 
     useEffect(() => {
         const getArticle = async() =>{
-            const res = await axios.get(`http://localhost:4000/articles/view/${title}`); //location of the article and submitted is the input from the user
+            const res = await axios.get(`http://localhost:4000/articles/rejected\/${title}`); //location of the article and submitted is the input from the user
             setArticle(res.data);
         }
         //ViewArticle(submitted);
@@ -43,4 +43,7 @@ export default function ViewArticles() {
         </div>
     )
 }
+
+
+
 
