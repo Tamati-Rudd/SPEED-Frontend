@@ -3,7 +3,7 @@ import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import ViewArticles from './pages/ViewArticles';
 import SubmitArticle from './pages/SubmitArticle';
-import Moderator from './pages/Moderator';
+import Moderator from './pages/ModerateArticle';
 import './App.css';
 
 function App() {
