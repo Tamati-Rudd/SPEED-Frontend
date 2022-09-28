@@ -3,11 +3,8 @@ import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import ViewArticles from './pages/ViewArticles';
 import SubmitArticle from './pages/SubmitArticle';
-<<<<<<< Updated upstream
-import Moderator from './pages/ModerateArticle';
 =======
-import ModerateArticle from './pages/ModeratorArticle';
->>>>>>> Stashed changes
+import ModerateArticles from './pages/ModerateArticle';
 import './App.css';
 import ModerateArticle from './pages/ModerateArticle';
 
@@ -20,11 +17,7 @@ function App() {
               <li><NavLink exact to = "/">Home</NavLink></li>
               <li><NavLink exact to = "/submit">Submit Article</NavLink></li>
               <li><NavLink exact to = "/articles">Articles</NavLink></li>
-<<<<<<< Updated upstream
               <li><NavLink exact to = "/moderatearticle">Moderator</NavLink></li>
-=======
-              <li><NavLink exact to = "/moderateArticle">Moderate Articles</NavLink></li>
->>>>>>> Stashed changes
             </ul>
           <div className="content">
             <Routes>
@@ -39,10 +32,6 @@ function App() {
         </div>
         </BrowserRouter>
   );
-<<<<<<< Updated upstream
 }
 
 export default App;
-=======
-}
->>>>>>> Stashed changes
