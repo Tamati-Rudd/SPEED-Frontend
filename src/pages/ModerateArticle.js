@@ -1,54 +1,44 @@
 import { React, useEffect, useState } from 'react';
-import { moderateArticle } from '../Express';
+//import { ViewArticle } from '../Express';
+import axios from 'axios';
 
-export default function ModerateArticle() {
-<<<<<<< Updated upstream
-    // testing page currently not working properly  
-=======
-    // testing page currently not working properly
-    
->>>>>>> Stashed changes
-    //so far backend can retrieve data 
-    //needs to be displayed to the frontend on the viewarticle page
-    //setSubmitted is the text that gets displayed
-    //title is the message that is sent into 
-    // data is stored in localhost4000:article/view data needs to be displayed at localhost3000:articles/view
+export default function ViewArticles() {
+    //currently using useEffect to get the articles from the collection without useing express.js
+    //currently displays the messages to the article page when serached with the correct data
 
     const [title, setTitle] = useState("");
+    const [article, setArticle] = useState([]);  
     const [submitted, setSubmitted] = useState("");
 
     useEffect(() => {
-        console.log(title);
-    }, [title])
+        const getArticle = async() =>{
+            const res = await axios.get(`http://localhost:4000/articles/view/${submitted}`); //location of the article and submitted is the input from the user
+            setArticle(res.data);
+        }
+        getArticle();
+    }, [submitted])
 
-    const onChangeTitle = (event) => {
+       const onChangeTitle = (event) => {
         setTitle(event.target.value);
     }
 
-    const onClickSubmit = () => {
-        let result = moderateArticle(title).then(() => {
-            console.log(result);
-            setSubmitted(submitted); //this is displayed when pressing the serach button
-        })
-        .catch(() => {
-            console.error("An error occured");
-            setSubmitted("An error occured while attempting to submit your article. Please try again later");
-        })
-        
+  
+    
+    const onClickSubmit = (e) => {
+        setSubmitted(title)
     }
-
+    
+// the article map is used to display each column on the data that is stored in the collection
+// note for columns that do not store data it will be displayed as empty currently
     return (
         <div>
             <form>
                 <label htmlFor='title'>Title: </label>
                 <input type="text" id="title" name="title" value={title} onChange={onChangeTitle}></input>
             </form>
-<<<<<<< Updated upstream
-            <button onClick={onClickSubmit}>Moderate</button> 
-=======
             <button onClick={onClickSubmit}>Search</button> 
->>>>>>> Stashed changes
-            <p>{submitted}</p>
+            
+            <div >{submitted ? (article.map((a) => (<div key={a._id}>ID: {a._id}, TITLE: {a.title}</div>))) : (<p>awaiting search</p>)}</div>
         </div>
     )
 }

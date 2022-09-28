@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from 'react';
-import { ViewArticle } from '../Express';
+//import { ViewArticle } from '../Express';
 import axios from 'axios';
 
 export default function ViewArticles() {
