@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from 'react';
-//import { ViewArticle } from '../Express';
+//import { ViewArticle } from '../Express';// not sure how to use this
 import axios from 'axios';
 
 export default function ViewArticles() {
@@ -37,7 +37,6 @@ export default function ViewArticles() {
                 <input type="text" id="title" name="title" value={title} onChange={onChangeTitle}></input>
             </form>
             <button onClick={onClickSubmit}>Search</button> 
-            
             <div >{submitted ? (article.map((a) => (<div key={a._id}>ID: {a._id}, TITLE: {a.title}</div>))) : (<p>awaiting search</p>)}</div>
         </div>
     )

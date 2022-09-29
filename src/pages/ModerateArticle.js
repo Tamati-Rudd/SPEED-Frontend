@@ -18,6 +18,7 @@ export default function ViewArticles() {
         getArticle();
     }, [submitted])
 
+
        const onChangeTitle = (event) => {
         setTitle(event.target.value);
     }
@@ -37,8 +38,8 @@ export default function ViewArticles() {
                 <input type="text" id="title" name="title" value={title} onChange={onChangeTitle}></input>
             </form>
             <button onClick={onClickSubmit}>Search</button> 
-            
             <div >{submitted ? (article.map((a) => (<div key={a._id}>ID: {a._id}, TITLE: {a.title}</div>))) : (<p>awaiting search</p>)}</div>
         </div>
     )
 }
+
