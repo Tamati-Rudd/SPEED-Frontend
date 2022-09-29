@@ -12,12 +12,11 @@ export default function ViewArticles() {
 
     useEffect(() => {
         const getArticle = async() =>{
-            const res = await axios.get(`http://localhost:4000/articles/view/${title}`); //location of the article and submitted is the input from the user
+            const res = await axios.get(`http://localhost:4000/articles/view/${submitted}`); //location of the article and submitted is the input from the user
             setArticle(res.data);
         }
-        //ViewArticle(submitted);
         getArticle();
-    }, [title])
+    }, [submitted])
 
        const onChangeTitle = (event) => {
         setTitle(event.target.value);
@@ -38,9 +37,7 @@ export default function ViewArticles() {
                 <input type="text" id="title" name="title" value={title} onChange={onChangeTitle}></input>
             </form>
             <button onClick={onClickSubmit}>Search</button> 
-            
-            <div >{submitted ? (article.map((a) => (<div key={a._id}>ID: {a._id}, TITLE: {a.title}</div>))) : (submitted)}</div>
+            <div >{submitted ? (article.map((a) => (<div key={a._id}>ID: {a._id}, TITLE: {a.title}</div>))) : (<p>awaiting search</p>)}</div>
         </div>
     )
 }
-
