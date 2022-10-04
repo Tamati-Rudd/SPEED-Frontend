@@ -1,35 +1,65 @@
 import { React, useEffect, useState } from 'react';
+import FormInput from '../components/FormInput';
 import { submitArticle } from '../Express';
 
+/**
+ * This page handles the entry and submission of article details
+ * @returns page components
+ */
 export default function SubmitArticle() {
-    const [title, setTitle] = useState("");
+    const [articleData, setArticleData] = useState({
+        title: "",
+        author: "",
+        publication_year: "",
+        volume_number: "",
+        issue_number: "",
+        doi: "",
+        se_practice: "",
+        claim: "",
+        level_of_evidence: ""
+    });
+
+    const [formQuestions, setFormQuestions] = useState([
+        {
+            field: "title",
+            label: "Title: ",
+            type: "text",
+            placeholder: "Enter article title",
+            disabled: false,
+            required: true,
+            input: ""
+        }
+    ]);
     const [submitted, setSubmitted] = useState("");
 
     useEffect(() => {
-        console.log(title);
-    }, [title])
+        console.log(formQuestions);
+    }, [formQuestions])
 
-    const onChangeTitle = (event) => {
-        setTitle(event.target.value);
-    }
-
+    /**
+     * Handle pressing of the submit button
+     */
     const onClickSubmit = () => {
-        let result = submitArticle(title).then(() => {
-            console.log(result);
-            setSubmitted("Your article has been submitted for review!");
+        formQuestions.forEach(question => {
+            console.log(question);
         })
-        .catch(() => {
-            console.error("An error occured");
-            setSubmitted("An error occured while attempting to submit your article. Please try again later");
-        })
-        
+
+        // let result = submitArticle(articleData).then(() => {
+        //     console.log(result);
+        //     setSubmitted("Your article has been submitted for review!");
+        // })
+        // .catch(() => {
+        //     console.error("An error occured");
+        //     setSubmitted("An error occured while attempting to submit your article. Please try again later");
+        // })
     }
 
     return (
         <div>
             <form>
-                <label htmlFor='title'>Author: </label>
-                <input type="text" id="title" name="title" value={title} onChange={onChangeTitle}></input>
+                {formQuestions ? formQuestions.map((question, key) => (
+                    <FormInput question={question} key={key}/>
+                )) : <h4>Failed to load form questions</h4>}
             </form>
             <button onClick={onClickSubmit}>Submit</button>
             <p>{submitted}</p>
