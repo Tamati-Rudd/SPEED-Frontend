@@ -1,44 +1,158 @@
-import { React, useEffect, useState } from 'react';
-//import { ViewArticle } from '../Express';
-import axios from 'axios';
+import { useState } from "react";
+import { Box, Snackbar, Alert } from "@mui/material";
+import { useContext, useEffect } from "react";
+import ArticleTable from "../components/Table";
+import { moderatorTableColumns } from "../components/tableColumns";
+import { CurrentUrlContext } from "../context/CurrentUrlContext";
+import { CurrentUserContext } from "../context/CurrentUserContext";
+import {
+  deleteArticle,
+  getArticle,
+  moderateArticle,
+} from "../services/articlesService";
 
-export default function ViewArticles() {
-    //currently using useEffect to get the articles from the collection without useing express.js
-    //currently displays the messages to the article page when serached with the correct data
+const ModerateArticle = () => {
+  // Current URL state
+  const [, setSelectedUrl] = useContext(CurrentUrlContext);
+  const [, setCurrentUser] = useContext(CurrentUserContext);
 
-    const [title, setTitle] = useState("");
-    const [article, setArticle] = useState([]);  
-    const [submitted, setSubmitted] = useState("");
+  // Articles
+  const [articles, setArticles] = useState([]);
 
-    useEffect(() => {
-        const getArticle = async() =>{
-            const res = await axios.get(`http://localhost:4000/articles/view/${submitted}`); //location of the article and submitted is the input from the user
-            setArticle(res.data);
-        }
-        getArticle();
-    }, [submitted])
+  // Loading states
+  const [isLoading, setIsLoading] = useState(true);
+  const [moderationLoading, setModerationLoading] = useState(false);
 
-       const onChangeTitle = (event) => {
-        setTitle(event.target.value);
+  // Feedback state for Snackbar
+  const [feedback, setFeedback] = useState("");
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
+  const [isFeedbackError, setIsFeedbackError] = useState(false);
+
+  useEffect(() => {
+    // Navigation event from React Router
+    if (document.referrer !== "") {
+      setSelectedUrl("/moderate-article");
+      setCurrentUser("Moderator");
     }
 
-  
-    
-    const onClickSubmit = (e) => {
-        setSubmitted(title)
-    }
-    
-// the article map is used to display each column on the data that is stored in the collection
-// note for columns that do not store data it will be displayed as empty currently
-    return (
-        <div>
-            <form>
-                <label htmlFor='title'>Title: </label>
-                <input type="text" id="title" name="title" value={title} onChange={onChangeTitle}></input>
-            </form>
-            <button onClick={onClickSubmit}>Search</button> 
-            
-            <div >{submitted ? (article.map((a) => (<div key={a._id}>ID: {a._id}, TITLE: {a.title}</div>))) : (<p>awaiting search</p>)}</div>
-        </div>
-    )
-}
+    // Grab all the articles and store it as state.
+    getArticle()
+      .then((data) => {
+        const articles = data.data.filter((article) => !article.moderated);
+        setArticles(articles);
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [setSelectedUrl, setCurrentUser]);
+
+   //Deletes an article from the articles state array.
+  const deleteArticleFromState = (id) => {
+    const newArticles = articles.filter((article) => article._id !== id);
+    setArticles(newArticles);
+  };
+
+
+
+  //Function to moderate an article as approved. This will change the moderated value for
+  // an article to true and persist this change to the database.
+
+  const handleAccept = (id) => () => {
+    setModerationLoading(true);
+    moderateArticle(id)
+      .then((data) => {
+        setFeedback(data.data.msg);
+        setIsFeedbackError(false);
+        deleteArticleFromState(id);
+      })
+      .catch((data) => {
+        setFeedback(data.data.error);
+        setIsFeedbackError(true);
+      })
+      .finally(() => {
+        setFeedbackOpen(true);
+        setModerationLoading(false);
+      });
+  };
+
+  /**
+   * Function to moderate an article as rejected. This will delete the article from the database.
+   *
+   * @param {*} id
+   * @returns
+   */
+  const handleReject = (id) => () => {
+    setModerationLoading(true);
+    deleteArticle(id)
+      .then((data) => {
+        setFeedback(data.data.msg);
+        setIsFeedbackError(false);
+        deleteArticleFromState(id);
+      })
+      .catch((data) => {
+        setFeedback(data.data.error);
+        setIsFeedbackError(true);
+      })
+      .finally(() => {
+        setFeedbackOpen(true);
+        setModerationLoading(false);
+      });
+  };
+/**
+   * Handles closing the snackbar feedback.
+   * @param {*} event
+   * @param {*} reason
+   * @returns
+   */
+  const handleFeedbackClose = (event, reason) => {
+    if (reason === "clickaway") return;
+    setFeedbackOpen(false);
+  };
+
+  return (
+    <Box
+      sx={{
+        bgcolor: "#fff",
+        margin: "12px",
+        padding: "16px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <h1>Moderate Articles</h1>
+      <Box>
+        {isLoading ? (
+          <></>
+        ) : (
+          <ArticleTable
+            data={articles}
+            columns={moderatorTableColumns}
+            isModerator={true}
+            handleAccept={handleAccept}
+            handleReject={handleReject}
+            moderationLoading={moderationLoading}
+          />
+        )}
+      </Box>
+      <Snackbar
+        open={feedbackOpen}
+        autoHideDuration={5000}
+        onClose={handleFeedbackClose}
+      >
+        <Alert
+          onClose={handleFeedbackClose}
+          severity={isFeedbackError ? "error" : "success"}
+          sx={{ width: "100%" }}
+        >
+          {feedback}
+        </Alert>
+      </Snackbar>
+    </Box>
+  );
+};
+
+export default ModerateArticle;
