@@ -36,3 +36,20 @@
     transform: rotate(360deg);
   }
 }
+
+p {
+  margin-left: 10px;
+}
+
+h2 {
+  text-align: center;
+}
+
+.submitButton {
+  display: block;
+  margin: 0 auto;
+}
+
+.FormInputDiv {
+  margin-left: 10px;
+}

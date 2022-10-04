@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from 'react';
 import FormInput from '../components/FormInput';
+import { FormQuestions } from '../components/FormQuestions';
 import { submitArticle } from '../Express';
 
 /**
@@ -7,62 +8,45 @@ import { submitArticle } from '../Express';
  * @returns page components
  */
 export default function SubmitArticle() {
-    const [articleData, setArticleData] = useState({
-        title: "",
-        author: "",
-        publication_year: "",
-        volume_number: "",
-        issue_number: "",
-        doi: "",
-        se_practice: "",
-        claim: "",
-        level_of_evidence: ""
-    });
-
-    const [formQuestions, setFormQuestions] = useState([
-        {
-            field: "title",
-            label: "Title: ",
-            type: "text",
-            placeholder: "Enter article title",
-            disabled: false,
-            required: true,
-            input: ""
-        }
-    ]);
-    const [submitted, setSubmitted] = useState("");
-
-    useEffect(() => {
-        console.log(formQuestions);
-    }, [formQuestions])
-
     /**
      * Handle pressing of the submit button
      */
     const onClickSubmit = () => {
-        formQuestions.forEach(question => {
-            console.log(question);
-        })
+        console.log("TEST")
+        if (FormQuestions[0].input !== "" && FormQuestions[1].input !== "" && FormQuestions[3].input.match(/^\d{4}$/)) {
+            //Build articleData JSON 
+            let articleData = {};
+            FormQuestions.forEach(question => {
+                articleData[question.field] = question.input;
+            })
+            articleData.level_of_evidence = "";
 
-        // let result = submitArticle(articleData).then(() => {
-        //     console.log(result);
-        //     setSubmitted("Your article has been submitted for review!");
-        // })
-        // .catch(() => {
-        //     console.error("An error occured");
-        //     setSubmitted("An error occured while attempting to submit your article. Please try again later");
-        // })
+            console.log(articleData);
+            //Submit article
+            let result = submitArticle(articleData).then(() => {
+                console.log(result);
+                alert("Your article has been submitted for review!");
+            })
+            .catch((err) => {
+                console.error(err);
+                alert("An error occured while attempting to submit your article. Please try again later");     
+            })
+        } else {
+            alert("Please fill out all required fields");
+        }
     }
 
     return (
         <div>
+            <h2>Submit an Article</h2>
+            <p>* required</p>
             <form>
-                {formQuestions ? formQuestions.map((question, key) => (
+                {FormQuestions ? FormQuestions.map((question, key) => (
                     <FormInput question={question} key={key}/>
                 )) : <h4>Failed to load form questions</h4>}
             </form>
-            <button onClick={onClickSubmit}>Submit</button>
-            <p>{submitted}</p>
+            <button className="submitButton" onClick={onClickSubmit}>Submit</button>
+            <br />
         </div>
     )
 }

@@ -27,13 +27,12 @@ export default function FormInput(props) {
      * When the inputSettings state is updated, update the state in the parent component
      */
     useEffect(() => {
-        console.log(inputSettings);
         props.question["input"] = inputSettings.input;
     }, [inputSettings])
 
     return (
-        <div>
-            <label htmlFor={inputSettings.field}>{inputSettings.label}</label>
+        <div className="FormInputDiv">
+            <p>{inputSettings.label}{inputSettings.required && "* "}
                 <input 
                     id={inputSettings.field}
                     name={inputSettings.field}
@@ -43,7 +42,8 @@ export default function FormInput(props) {
                     required={inputSettings.required}
                     disabled={inputSettings.disabled}
                     onChange={handleInputChange}>
-            </input>
+                </input>
+            </p>
         </div>
     )
 }
