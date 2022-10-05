@@ -8,7 +8,7 @@ export const tableColumns = [
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "authors",
+    id: "author",
     label: "Authors",
     minWidth: 170,
     align: "right",
