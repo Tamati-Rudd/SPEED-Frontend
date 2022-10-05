@@ -10,7 +10,6 @@ import {
   getArticle,
   moderateArticle,
 } from "../services/articlesService";
-
 const ModerateArticle = () => {
   // Current URL state
   const [, setSelectedUrl] = useContext(CurrentUrlContext);
@@ -48,18 +47,15 @@ const ModerateArticle = () => {
         setIsLoading(false);
       });
   }, [setSelectedUrl, setCurrentUser]);
-
-   //Deletes an article from the articles state array.
+//Deletes an article from the articles state array.
   const deleteArticleFromState = (id) => {
     const newArticles = articles.filter((article) => article._id !== id);
     setArticles(newArticles);
   };
 
-
-
-  //Function to moderate an article as approved. This will change the moderated value for
-  // an article to true and persist this change to the database.
-
+  //Function to moderate an article as approved. This will change the moderated value for an article to true
+  //and persist this change to the database.
+  
   const handleAccept = (id) => () => {
     setModerationLoading(true);
     moderateArticle(id)
