@@ -15,14 +15,14 @@ function App() {
               <li><NavLink exact to = "/">Home</NavLink></li>
               <li><NavLink exact to = "/submit">Submit Article</NavLink></li>
               <li><NavLink exact to = "/articles">Articles</NavLink></li>
-              <li><NavLink exact to = "/moderateArticle">Moderate  Article</NavLink></li>
+              <li><NavLink exact to = "/moderate">Moderate Article</NavLink></li>
             </ul>
           <div className="content">
             <Routes>
               <Route exact path='/' element={<Home/>}/>
               <Route exact path="/articles" element={<ViewArticles/>}/>
               <Route exact path="/submit" element={<SubmitArticle/>}/>
-              <Route exact path="/moderateArticle" element={<ModerateArticle/>}/>
+              <Route exact path="/moderate" element={<ModerateArticle/>}/>
               <Route exact path="/404" element={<NotFound/>}/>
               <Route path="*" element={<Navigate to="/404" replace />}/>
             </Routes>

@@ -1,4 +1,7 @@
 import { React, useEffect, useState } from 'react';
+import { Box} from "@mui/material";
+import ArticleTable from "../components/Table";
+import { tableColumns } from "../components/tableColumns";
 //import { ViewArticle } from '../Express';
 import axios from 'axios';
 
@@ -6,7 +9,7 @@ export default function ViewArticles() {
     //currently using useEffect to get the articles from the collection without useing express.js
     //currently displays the messages to the article page when serached with the correct data
 
-    const [title, setTitle] = useState("");
+    const [year, setYear] = useState("");
     const [article, setArticle] = useState([]);  
     const [submitted, setSubmitted] = useState("");
 
@@ -18,27 +21,41 @@ export default function ViewArticles() {
         getArticle();
     }, [submitted])
 
-       const onChangeTitle = (event) => {
-        setTitle(event.target.value);
+       const onChangeYear = (event) => {
+        setYear(event.target.value);
     }
 
   
     
     const onClickSubmit = (e) => {
-        setSubmitted(title)
+        setSubmitted(year)
     }
     
 // the article map is used to display each column on the data that is stored in the collection
 // note for columns that do not store data it will be displayed as empty currently
     return (
-        <div>
-            <form>
-                <label htmlFor='title'>Title: </label>
-                <input type="text" id="title" name="title" value={title} onChange={onChangeTitle}></input>
+        <Box
+      sx={{
+        bgcolor: "#fff",
+        margin: "12px",
+        padding: "16px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+        <h1>Articles</h1>
+        <Box>
+        <form>
+                <label htmlFor='year'>Publication Year: </label>
+                <input type="text" id="year" name="year" value={year} onChange={onChangeYear}></input>
             </form>
             <button onClick={onClickSubmit}>Search</button> 
-            
-            <div >{submitted ? (article.map((a) => (<div key={a._id}>ID: {a._id}, TITLE: {a.title}</div>))) : (<p>awaiting search</p>)}</div>
-        </div>
+        <ArticleTable
+            data={article}
+            columns={tableColumns}
+          />
+        </Box>
+    </Box>
     )
 }

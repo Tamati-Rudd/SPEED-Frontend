@@ -1,6 +1,6 @@
-import { useState } from "react";
+import {React, useState, useEffect} from "react";
 import { Box, Snackbar, Alert } from "@mui/material";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import ArticleTable from "../components/Table";
 import { moderatorTableColumns } from "../components/tableColumns";
 import { CurrentUrlContext } from "../context/CurrentUrlContext";
@@ -10,6 +10,8 @@ import {
   getArticle,
   moderateArticle,
 } from "../services/articlesService";
+import axios from 'axios';
+
 const ModerateArticle = () => {
   // Current URL state
   const [, setSelectedUrl] = useContext(CurrentUrlContext);
@@ -30,7 +32,7 @@ const ModerateArticle = () => {
   useEffect(() => {
     // Navigation event from React Router
     if (document.referrer !== "") {
-      setSelectedUrl("/moderate-article");
+      setSelectedUrl("/moderateArticle");
       setCurrentUser("Moderator");
     }
 
@@ -38,7 +40,9 @@ const ModerateArticle = () => {
     getArticle()
       .then((data) => {
         const articles = data.data.filter((article) => !article.moderated);
-        setArticles(articles);
+        // title auther doi year moderated()
+        setArticles(articles.data);
+  
       })
       .catch((error) => {
         console.error(error);
@@ -46,13 +50,39 @@ const ModerateArticle = () => {
       .finally(() => {
         setIsLoading(false);
       });
+
+
   }, [setSelectedUrl, setCurrentUser]);
+
+
+  useEffect(() => {
+    const getArticles = async() =>{
+        const res = await axios.get(`http://localhost:4000/moderate/moderateArticles`); // http://localhost:4000/articles/view/ location of the article and submitted is the input from the user
+        setArticles(res.data);
+    }
+    getArticles();
+}, [articles])
+/*
+   * Deletes an article from the articles state array.
+   *
+   * @param {*} id
+   */
+
 //Deletes an article from the articles state array.
+
   const deleteArticleFromState = (id) => {
     const newArticles = articles.filter((article) => article._id !== id);
     setArticles(newArticles);
   };
 
+
+  /*
+   * Function to moderate an article as approved. This will change the moderated value for an article to true
+   *  and persist this change to the database.
+   *
+   * @param {*} id
+   * @returns
+   */
   //Function to moderate an article as approved. This will change the moderated value for an article to true
   //and persist this change to the database.
   
