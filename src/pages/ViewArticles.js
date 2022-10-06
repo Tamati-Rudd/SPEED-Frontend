@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from 'react';
 import { Box } from "@mui/material";
 import ArticleTable from "../components/Table";
-import { TableColumns } from "../components/TableColumns";
+import { TableColumns } from "../components/test";
 //import { ViewArticle } from '../Express';
 import axios from 'axios';
 

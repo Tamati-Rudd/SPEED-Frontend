@@ -2,7 +2,7 @@ import { React, useState, useEffect } from "react";
 import { Box, Snackbar, Alert } from "@mui/material";
 import { useContext } from "react";
 import ArticleTable from "../components/Table";
-import { moderatorTableColumns } from "../components/TableColumns";
+import { moderatorTableColumns } from "../components/test";
 import { CurrentUrlContext } from "../context/CurrentUrlContext";
 import { CurrentUserContext } from "../context/CurrentUserContext";
 import {
