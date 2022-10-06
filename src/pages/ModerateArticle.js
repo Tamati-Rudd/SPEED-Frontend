@@ -57,7 +57,7 @@ const ModerateArticle = () => {
    */
    useEffect(() => {
     const getArticles = async () => {
-      const res = await axios.get(`http://localhost:4000/moderate/moderateArticles`); // http://localhost:4000/articles/view/ location of the article and submitted is the input from the user
+      const res = await axios.get(`https://speed-backend-team7.herokuapp.com/moderate/moderateArticles`); // http://localhost:4000/articles/view/ location of the article and submitted is the input from the user
       setArticles(res.data);
     }
     getArticles();

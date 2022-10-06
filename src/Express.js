@@ -8,7 +8,7 @@ import axios from "axios";
 
 export async function submitArticle(articleData) {
     try {
-        let response = await axios.post("http://localhost:4000/submit/save", articleData, { timeout: 10000 });
+        let response = await axios.post("https://speed-backend-team7.herokuapp.com/submit/save", articleData, { timeout: 10000 });
         if (response.status === 201) {
             return 0;
         }
@@ -21,7 +21,7 @@ export async function submitArticle(articleData) {
 
 export async function ViewArticle(year) {
     try {
-        let response = await axios.get(`http://localhost:4000/articles/view/${year}`, { timeout: 10000 });
+        let response = await axios.get(`https://speed-backend-team7.herokuapp.com/articles/view/${year}`, { timeout: 10000 });
         if (response.status === 200) {
             return response;
         }
@@ -40,7 +40,7 @@ export async function ViewArticle(year) {
 export async function moderateArticle(articleData) {
     let data = { "title": articleData }
     try {
-        let response = await axios.get("http://localhost:4000/moderate/moderateArticles", data, { timeout: 10000 });
+        let response = await axios.get("https://speed-backend-team7.herokuapp.com/moderate/moderateArticles", data, { timeout: 10000 });
         if (response.status === 201) {
             return 0;
         }

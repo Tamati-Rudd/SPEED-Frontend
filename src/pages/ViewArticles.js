@@ -46,7 +46,7 @@ export default function ViewArticles() {
      */
     useEffect(() => {
         const getArticle = async () => {
-            const res = await axios.get(`http://localhost:4000/articles/view/${year}`)
+            const res = await axios.get(`https://speed-backend-team7.herokuapp.com/articles/view/${year}`)
             setArticle(res.data);
         }
 
