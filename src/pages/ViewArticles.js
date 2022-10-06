@@ -17,8 +17,13 @@ export default function ViewArticles() {
 
     useEffect(() => {
         const getArticle = async() =>{
-            const res = await axios.get(`http://localhost:4000/articles/view/${year}`); //location of the article and submitted is the input from the user
-            setArticle(res.data);
+            const res = await axios.get(`http://localhost:4000/articles/view/${year}`).then(() => {
+                setArticle(res.data);
+            }) //location of the article and submitted is the input from the user
+            .catch((err) =>{
+                alert("Error: " + err.message);
+            })
+
         }
         getArticle();
     }, [year])
