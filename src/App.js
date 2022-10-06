@@ -24,6 +24,7 @@ function App() {
               <Route exact path="/submit" element={<SubmitArticle/>}/>
               <Route exact path="/moderate" element={<ModerateArticle/>}/>
               <Route exact path="/404" element={<NotFound/>}/>
+              <Route exact path="/submit" element={<SubmitArticle/>}/>
               <Route path="*" element={<Navigate to="/404" replace />}/>
             </Routes>
           </div>

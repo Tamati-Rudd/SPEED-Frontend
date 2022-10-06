@@ -1,9 +1,8 @@
 import axios from "axios";
 
 export async function submitArticle(articleData) {
-    let data = {"title":articleData}
     try {
-        let response = await axios.post("http://localhost:4000/submit/save", data, { timeout: 10000 });
+        let response = await axios.post("http://localhost:4000/submit/save", articleData, { timeout: 10000 });
         if (response.status === 201) {
             return 0;
         } 
