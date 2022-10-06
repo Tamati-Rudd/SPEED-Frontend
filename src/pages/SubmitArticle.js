@@ -13,7 +13,7 @@ export default function SubmitArticle() {
      */
     const onClickSubmit = () => {
         console.log("TEST")
-        if (FormQuestions[0].input !== "" && FormQuestions[1].input !== "" && FormQuestions[3].input.match(/^\d{4}$/)) {
+        if (FormQuestions[0].input !== "" && FormQuestions[1].input !== "" && FormQuestions[2].input !== "" && FormQuestions[3].input.match(/^\d{4}$/)) {
             //Build articleData JSON 
             let articleData = {};
             FormQuestions.forEach(question => {
@@ -21,10 +21,8 @@ export default function SubmitArticle() {
             })
             articleData.level_of_evidence = "";
 
-            console.log(articleData);
             //Submit article
             let result = submitArticle(articleData).then(() => {
-                console.log(result);
                 alert("Your article has been submitted for review!");
             })
             .catch((err) => {
