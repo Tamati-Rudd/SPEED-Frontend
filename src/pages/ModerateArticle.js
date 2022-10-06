@@ -1,8 +1,8 @@
-import {React, useState, useEffect} from "react";
+import { React, useState, useEffect } from "react";
 import { Box, Snackbar, Alert } from "@mui/material";
 import { useContext } from "react";
 import ArticleTable from "../components/Table";
-import { moderatorTableColumns } from "../components/tableColumns";
+import { moderatorTableColumns } from "../components/TableColumns";
 import { CurrentUrlContext } from "../context/CurrentUrlContext";
 import { CurrentUserContext } from "../context/CurrentUserContext";
 import {
@@ -11,6 +11,11 @@ import {
   moderateArticle,
 } from "../services/articlesService";
 import axios from 'axios';
+
+/**
+ * Page for moderating submitted articles. Each article is either accepted or rejected
+ * @returns Page components
+ */
 const ModerateArticle = () => {
   // Current URL state
   const [, setSelectedUrl] = useContext(CurrentUrlContext);
@@ -28,20 +33,14 @@ const ModerateArticle = () => {
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const [isFeedbackError, setIsFeedbackError] = useState(false);
 
+  /**
+   * Show moderation table
+   */
   useEffect(() => {
-    // Navigation event from React Router
-    // if (document.referrer !== "") {
-    //   setSelectedUrl("/moderateArticle");
-    //   setCurrentUser("Moderator");
-    // }
-
-    // Grab all the articles and store it as state.
     getArticle()
       .then((data) => {
         const articles = data.data.filter((article) => !article.moderated);
-        // title auther doi year moderated()
         setArticles(articles.data);
-  
       })
       .catch((error) => {
         console.error(error);
@@ -53,18 +52,22 @@ const ModerateArticle = () => {
 
   }, [setSelectedUrl, setCurrentUser]);
 
-  useEffect(() => {
-    const getArticles = async() =>{
-        const res = await axios.get(`http://localhost:4000/moderate/moderateArticles`); // http://localhost:4000/articles/view/ location of the article and submitted is the input from the user
-        setArticles(res.data);
-    }
-    getArticles();  
-}, [articles])
-/*
-   * Deletes an article from the articles state array.
-   *
-   * @param {*} id
+  /**
+   * Retrieve submitted article data
    */
+   useEffect(() => {
+    const getArticles = async () => {
+      const res = await axios.get(`http://localhost:4000/moderate/moderateArticles`); // http://localhost:4000/articles/view/ location of the article and submitted is the input from the user
+      setArticles(res.data);
+    }
+    getArticles();
+  }, [articles])
+
+  /*
+     * Deletes an article from the articles state array.
+     *
+     * @param {*} id
+     */
   const deleteArticleFromState = (id) => {
     const newArticles = articles.filter((article) => article._id !== id);
     setArticles(newArticles);
@@ -118,12 +121,13 @@ const ModerateArticle = () => {
         setModerationLoading(false);
       });
   };
-/**
-   * Handles closing the snackbar feedback.
-   * @param {*} event
-   * @param {*} reason
-   * @returns
-   */
+  
+  /**
+     * Handles closing the snackbar feedback.
+     * @param {*} event
+     * @param {*} reason
+     * @returns
+     */
   const handleFeedbackClose = (event, reason) => {
     if (reason === "clickaway") return;
     setFeedbackOpen(false);

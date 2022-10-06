@@ -28,7 +28,7 @@ export default function FormInput(props) {
      */
     useEffect(() => {
         props.question["input"] = inputSettings.input;
-    }, [inputSettings])
+    }, [inputSettings, props.question])
 
     return (
         <div className="FormInputDiv">
@@ -37,6 +37,7 @@ export default function FormInput(props) {
                     id={inputSettings.field}
                     name={inputSettings.field}
                     type={inputSettings.type} 
+                    size="75"
                     placeholder={inputSettings.placeholder}
                     value={inputSettings.input} 
                     required={inputSettings.required}

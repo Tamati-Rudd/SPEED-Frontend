@@ -6,6 +6,10 @@ import SubmitArticle from './pages/SubmitArticle';
 import ModerateArticle from './pages/ModerateArticle';
 import './App.css';
 
+/**
+ * Main page of the SPEED application
+ * @returns Page components
+ */
 function App() {
   return (
     <BrowserRouter>

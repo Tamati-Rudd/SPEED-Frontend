@@ -1,5 +1,7 @@
-// eslint-disable-next-line no-sparse-arrays
-export const tableColumns = [
+/**
+ * Define the table columns used in the tables
+ */
+export const TableColumns = [
   {
     id: "title",
     label: "Title",
@@ -66,8 +68,11 @@ export const tableColumns = [
   },
 ];
 
+/**
+ * Moderator page specific settings
+ */
 export const moderatorTableColumns = [
-  ...tableColumns,
+  ...TableColumns,
   {
     id: "action",
     label: "Action",
@@ -77,8 +82,11 @@ export const moderatorTableColumns = [
   },
 ];
 
+/**
+ * Analyst page specific settings
+ */
 export const analystTableColumns = [
-  ...tableColumns,
+  ...TableColumns,
   {
     id: "review",
     label: "Review",

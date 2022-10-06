@@ -1,5 +1,10 @@
 import axios from "axios";
 
+/**
+ * Helper functions to call the backend
+ * @param {*}  
+ * @returns reusable functions
+ */
 export const addArticle = async (article) => {
   return axios.post("http://localhost:4000/moderate", article);
 };

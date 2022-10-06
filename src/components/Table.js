@@ -23,6 +23,11 @@ import {
 } from "@mui/material";
 import CustomButton from "./CustomButton";
 
+/**
+ * Reusable React Table component for displaying a list of articles
+ * @param {*} param0 data needed to build the table
+ * @returns reusable table component
+ */
 const ArticleTable = ({
   data,
   columns,
@@ -266,8 +271,6 @@ const ArticleSummary = React.forwardRef(
     );
   }
 );
-
-
 
 const popupStyle = {
   width: 900,

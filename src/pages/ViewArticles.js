@@ -1,20 +1,21 @@
 import { React, useEffect, useState } from 'react';
-import { Box} from "@mui/material";
+import { Box } from "@mui/material";
 import ArticleTable from "../components/Table";
-import { tableColumns } from "../components/tableColumns";
+import { TableColumns } from "../components/TableColumns";
 //import { ViewArticle } from '../Express';
 import axios from 'axios';
 
+/**
+ * Page for searching and viewing articles in SPEED
+ * @returns page components
+ */
 export default function ViewArticles() {
-    //currently using useEffect to get the articles from the collection without useing express.js
-    //currently displays the messages to the article page when serached with the correct data
-
     const [year, setYear] = useState("");
-    const [article, setArticle] = useState([]);  
+    const [article, setArticle] = useState([]);
     //const [submitted, setSubmitted] = useState("");
 
 
-// testing useeffect with error handling
+    // WIP: testing useeffect with error handling
     // useEffect(() => {
     //     const getArticle = async() =>{
     //         // try{
@@ -40,52 +41,50 @@ export default function ViewArticles() {
     // }, [year])
 
 
-    //working use effect
+    /**
+     * Retrieve article data when the year input changes
+     */
     useEffect(() => {
-        const getArticle = async() =>{
+        const getArticle = async () => {
             const res = await axios.get(`http://localhost:4000/articles/view/${year}`)
-                setArticle(res.data);
-         } //location of the article and submitted is the input from the user
+            setArticle(res.data);
+        }
 
         getArticle();
     }, [year])
 
-    //this is to grab the data entered from the user and set it into the year const
-       const onChangeYear = (event) => {
-            setYear(event.target.value);
-        }
+    //this is to grab the data entered from the user and set it into the year state
+    const onChangeYear = (event) => {
+        setYear(event.target.value);
+    }
 
-        // function checkerArticle (){
-        // if    (res.data === []){
-        //         alert("Error getting article");
-        //     }
-        // }
+    // WIP: function checkerArticle (){
+    // if    (res.data === []){
+    //         alert("Error getting article");
+    //     }
+    // }
 
-        
-        
-    
-// the article map is used to display each column on the data that is stored in the collection
-// note for columns that do not store data it will be displayed as empty currently
-//<button onClick={onClickSubmit}>Search</button> 
-return (
+    // the article map is used to display each column on the data that is stored in the collection
+    // note for columns that do not store data it will be displayed as empty currently
+    return (
         <Box
-        sx={{
-            bgcolor: "#fff",
-            margin: "12px",
-            padding: "16px",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-    }}
-    >
-        <h1>Articles</h1>
-        <Box>
-        <form>
-                <label htmlFor='year'>Publication Year: </label>
-                <input type="text" id="year" name="year" value={year} onChange={onChangeYear}></input>
-            </form>
-         <ArticleTable data={article} columns={tableColumns}/>
+            sx={{
+                bgcolor: "#fff",
+                margin: "12px",
+                padding: "16px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+            }}
+        >
+            <h1>Articles</h1>
+            <Box>
+                <form>
+                    <label htmlFor='year'>Publication Year: </label>
+                    <input type="text" id="year" name="year" value={year} onChange={onChangeYear}></input>
+                </form>
+                <ArticleTable data={article} columns={TableColumns} />
+            </Box>
         </Box>
-    </Box>
     )
 }

@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react';
+import { React } from 'react';
 import FormInput from '../components/FormInput';
 import { FormQuestions } from '../components/FormQuestions';
 import { submitArticle } from '../Express';
@@ -12,7 +12,6 @@ export default function SubmitArticle() {
      * Handle pressing of the submit button
      */
     const onClickSubmit = () => {
-        console.log("TEST")
         if (FormQuestions[0].input !== "" && FormQuestions[1].input !== "" && FormQuestions[2].input !== "" && FormQuestions[3].input.match(/^\d{4}$/)) {
             //Build articleData JSON 
             let articleData = {};
@@ -22,13 +21,13 @@ export default function SubmitArticle() {
             articleData.level_of_evidence = "";
 
             //Submit article
-            let result = submitArticle(articleData).then(() => {
+            submitArticle(articleData).then(() => {
                 alert("Your article has been submitted for review!");
             })
-            .catch((err) => {
-                console.error(err);
-                alert("An error occured while attempting to submit your article. Please try again later");     
-            })
+                .catch((err) => {
+                    console.error(err);
+                    alert("An error occured while attempting to submit your article. Please try again later");
+                })
         } else {
             alert("Please fill out all required fields");
         }
@@ -40,7 +39,7 @@ export default function SubmitArticle() {
             <p>* required</p>
             <form>
                 {FormQuestions ? FormQuestions.map((question, key) => (
-                    <FormInput question={question} key={key}/>
+                    <FormInput question={question} key={key} />
                 )) : <h4>Failed to load form questions</h4>}
             </form>
             <button className="submitButton" onClick={onClickSubmit}>Submit</button>
