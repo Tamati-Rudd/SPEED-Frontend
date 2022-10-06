@@ -31,7 +31,7 @@ export async function submitArticle(articleData) {
     export async function moderateArticle(articleData) {
         let data = {"title":articleData}
         try {
-            let response = await axios.get("http://localhost:4000/articles/view", data, { timeout: 10000 });
+            let response = await axios.get("http://localhost:4000/moderate/moderateArticles", data, { timeout: 10000 });
             if (response.status === 201) {
                 return 0;
             } 
