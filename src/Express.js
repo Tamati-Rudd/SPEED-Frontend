@@ -14,20 +14,23 @@ export async function submitArticle(articleData) {
     }
 }
 
-    export async function ViewArticle(articleData) {
-        let data = {"title":articleData}
+    export async function ViewArticle(year) {
         try {
-            let response = await axios.get("http://localhost:4000/articles/view/", data, { timeout: 10000 });
-            if (response.status === 201) {
+            let response = await axios.get(`http://localhost:4000/articles/view/${year}`, { timeout: 10000 });
+            if (response.status === 200) {
                 return response;
             } 
         } catch (error) { //500 or other error
-            console.error(error);
-            console.error("Network or server error");
+            if (error.response.status === 404) {
+                alert(error.response.message);
             return 1;
+        }else{
+            alert("Network or server error");
+            return 2;
         }
 
     }
+}
 
     export async function moderateArticle(articleData) {
         let data = {"title":articleData}
