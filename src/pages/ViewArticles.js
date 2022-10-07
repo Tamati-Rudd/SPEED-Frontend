@@ -4,6 +4,7 @@ import ArticleTable from "../components/Table";
 import { TableColumns } from "../components/TableColumns";
 //import { ViewArticle } from '../Express';
 import axios from 'axios';
+import { config } from "../Config"
 
 /**
  * Page for searching and viewing articles in SPEED
@@ -46,7 +47,7 @@ export default function ViewArticles() {
      */
     useEffect(() => {
         const getArticle = async () => {
-            const res = await axios.get(`http://localhost:4000/articles/view/${year}`)
+            const res = await axios.get(`${config.expressUrls.VIEW_ARTICLE}/${year}`)
             setArticle(res.data);
         }
 

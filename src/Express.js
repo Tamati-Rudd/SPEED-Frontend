@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { config } from "./Config"
 /**
  * This file exports reusable functions used to call the backend
  * @param {*} articleData 
@@ -8,7 +8,7 @@ import axios from "axios";
 
 export async function submitArticle(articleData) {
     try {
-        let response = await axios.post("http://localhost:4000/submit/save", articleData, { timeout: 10000 });
+        let response = await axios.post(config.expressUrls.SUBMIT_ARTICLE, articleData, { timeout: 10000 });
         if (response.status === 201) {
             return 0;
         }
@@ -21,7 +21,7 @@ export async function submitArticle(articleData) {
 
 export async function ViewArticle(year) {
     try {
-        let response = await axios.get(`http://localhost:4000/articles/view/${year}`, { timeout: 10000 });
+        let response = await axios.get(`${config.expressUrls.VIEW_ARTICLE}/${year}`, { timeout: 10000 });
         if (response.status === 200) {
             return response;
         }
@@ -40,7 +40,7 @@ export async function ViewArticle(year) {
 export async function moderateArticle(articleData) {
     let data = { "title": articleData }
     try {
-        let response = await axios.get("http://localhost:4000/moderate/moderateArticles", data, { timeout: 10000 });
+        let response = await axios.get(config.expressUrls.MODERATE_VIEW_ARTICLE, data, { timeout: 10000 });
         if (response.status === 201) {
             return 0;
         }

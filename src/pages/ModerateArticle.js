@@ -11,6 +11,7 @@ import {
   moderateArticle,
 } from "../services/articlesService";
 import axios from 'axios';
+import { config } from "../Config";
 
 /**
  * Page for moderating submitted articles. Each article is either accepted or rejected
@@ -34,31 +35,13 @@ const ModerateArticle = () => {
   const [isFeedbackError, setIsFeedbackError] = useState(false);
 
   /**
-   * Show moderation table
-   */
-  useEffect(() => {
-    getArticle()
-      .then((data) => {
-        const articles = data.data.filter((article) => !article.moderated);
-        setArticles(articles.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-
-
-  }, [setSelectedUrl, setCurrentUser]);
-
-  /**
    * Retrieve submitted article data
    */
    useEffect(() => {
     const getArticles = async () => {
-      const res = await axios.get(`http://localhost:4000/moderate/moderateArticles`); // http://localhost:4000/articles/view/ location of the article and submitted is the input from the user
+      const res = await axios.get(config.expressUrls.MODERATE_VIEW_ARTICLE); // http://localhost:4000/articles/view/ location of the article and submitted is the input from the user
       setArticles(res.data);
+      setIsLoading(false);
     }
     getArticles();
   }, [articles])
@@ -147,7 +130,7 @@ const ModerateArticle = () => {
       <h1>Moderate Articles</h1>
       <Box>
         {isLoading ? (
-          <></>
+          <><h2>Loading articles for moderation...</h2></>
         ) : (
           <ArticleTable
             data={articles}
