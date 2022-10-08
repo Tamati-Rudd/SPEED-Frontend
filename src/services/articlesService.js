@@ -1,10 +1,6 @@
 import axios from "axios";
+import {config} from "../Config";
 
-/**
- * Helper functions to call the backend
- * @param {*}  
- * @returns reusable functions
- */
 export const addArticle = async (article) => {
   return axios.post("http://localhost:4000/moderate", article);
 };
@@ -14,9 +10,13 @@ export const getArticle = async () => {
 };
 
 export const moderateArticle = async (id) => {
-  return axios.put(`http://localhost:4000/moderate/moderateArticles${id}`);
+  return axios.put(
+    `${config.expressUrls.REJECT_ARTICLE}/${id}`
+  );
 };
 
 export const deleteArticle = async (id) => {
-  return axios.delete(`http://localhost:4000/moderate/moderateArticles${id}`);
+  return axios.get(
+    `${config.expressUrls.REJECT_ARTICLE}/${id}`
+  );
 };

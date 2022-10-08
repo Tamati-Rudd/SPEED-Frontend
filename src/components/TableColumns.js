@@ -1,7 +1,5 @@
-/**
- * Define the table columns used in the tables
- */
-export const TableColumns = [
+// eslint-disable-next-line no-sparse-arrays
+export const tableColumns = [
   {
     id: "title",
     label: "Title",
@@ -12,7 +10,7 @@ export const TableColumns = [
   {
     id: "author",
     label: "Authors",
-    minWidth: 170,
+    minWidth: 120,
     align: "right",
     format: (value) => value.toLocaleString("en-US"),
   },
@@ -26,7 +24,7 @@ export const TableColumns = [
   {
     id: "publication_year",
     label: "Publication Year",
-    minWidth: 100,
+    minWidth: 80,
     align: "right",
     format: (value) => value.toLocaleString("en-US"),
   },
@@ -40,7 +38,7 @@ export const TableColumns = [
   {
     id: "issue_number",
     label: "Issue Number",
-    minWidth: 170,
+    minWidth: 80,
     align: "right",
     format: (value) => value.toLocaleString("en-US"),
   },
@@ -62,31 +60,25 @@ export const TableColumns = [
   {
     id: "claimed_benefit",
     label: "Claimed Benefit",
-    minWidth: 170,
+    minWidth: 100,
     align: "right",
     format: (value) => value.toLocaleString("en-US"),
   },
 ];
 
-/**
- * Moderator page specific settings
- */
 export const moderatorTableColumns = [
-  ...TableColumns,
+  ...tableColumns,
   {
     id: "action",
     label: "Action",
-    minWidth: 170,
+    minWidth: 80,
     align: "right",
     format: (value) => value.toLocaleString("en-US"),
   },
 ];
 
-/**
- * Analyst page specific settings
- */
 export const analystTableColumns = [
-  ...TableColumns,
+  ...tableColumns,
   {
     id: "review",
     label: "Review",
