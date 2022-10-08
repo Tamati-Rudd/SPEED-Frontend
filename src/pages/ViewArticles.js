@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from 'react';
 import { Box } from "@mui/material";
 import ArticleTable from "../components/Table";
-import { TableColumns } from "../components/TableColumns";
+import { moderatorTableColumns } from "../components/TableColumns";
 //import { ViewArticle } from '../Express';
 import axios from 'axios';
 import { config } from "../Config"
@@ -14,8 +14,6 @@ export default function ViewArticles() {
     const [year, setYear] = useState("");
     const [article, setArticle] = useState([]);
     //const [submitted, setSubmitted] = useState("");
-
-
     // WIP: testing useeffect with error handling
     // useEffect(() => {
     //     const getArticle = async() =>{
@@ -84,7 +82,7 @@ export default function ViewArticles() {
                     <label htmlFor='year'>Publication Year: </label>
                     <input type="text" id="year" name="year" value={year} onChange={onChangeYear}></input>
                 </form>
-                <ArticleTable data={article} columns={TableColumns} />
+                <ArticleTable data={article} columns={moderatorTableColumns} />
             </Box>
         </Box>
     )

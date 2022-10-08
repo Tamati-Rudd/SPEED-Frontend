@@ -1,32 +1,14 @@
 import { React, useState, useEffect } from "react";
 import { Box, Snackbar, Alert } from "@mui/material";
-import { useContext } from "react";
 import ArticleTable from "../components/Table";
 import { moderatorTableColumns } from "../components/TableColumns";
-import { CurrentUrlContext } from "../context/CurrentUrlContext";
-import { CurrentUserContext } from "../context/CurrentUserContext";
-import {
-  deleteArticle,
-  getArticle,
-  moderateArticle,
-} from "../services/articlesService";
-import axios from 'axios';
-import { config } from "../Config";
+import axios from "axios";
+import { deleteArticle, moderateArticle } from "../services/articlesService";
 
-/**
- * Page for moderating submitted articles. Each article is either accepted or rejected
- * @returns Page components
- */
 const ModerateArticle = () => {
   // Current URL state
-  const [, setSelectedUrl] = useContext(CurrentUrlContext);
-  const [, setCurrentUser] = useContext(CurrentUserContext);
-
-  // Articles
-  const [articles, setArticles] = useState([]);
-
-  // Loading states
-  const [isLoading, setIsLoading] = useState(true);
+  // const [, setSelectedUrl] = useContext(CurrentUrlContext);
+  // const [, setCurrentUser] = useContext(CurrentUserContext);
   const [moderationLoading, setModerationLoading] = useState(false);
 
   // Feedback state for Snackbar
@@ -34,23 +16,23 @@ const ModerateArticle = () => {
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const [isFeedbackError, setIsFeedbackError] = useState(false);
 
-  /**
-   * Retrieve submitted article data
-   */
-   useEffect(() => {
-    const getArticles = async () => {
-      const res = await axios.get(config.expressUrls.MODERATE_VIEW_ARTICLE); // http://localhost:4000/articles/view/ location of the article and submitted is the input from the user
+  // Articles
+  const [articles, setArticles] = useState([]);
+  // Loading states
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    axios.get(`http://localhost:4000/moderate/moderateArticles`).then((res) => {
       setArticles(res.data);
       setIsLoading(false);
-    }
-    getArticles();
-  }, [articles])
+    });
+  }, []);
 
   /*
-     * Deletes an article from the articles state array.
-     *
-     * @param {*} id
-     */
+   * Deletes an article from the articles state array.
+   *
+   * @param {*} id
+   */
   const deleteArticleFromState = (id) => {
     const newArticles = articles.filter((article) => article._id !== id);
     setArticles(newArticles);
@@ -104,13 +86,12 @@ const ModerateArticle = () => {
         setModerationLoading(false);
       });
   };
-  
   /**
-     * Handles closing the snackbar feedback.
-     * @param {*} event
-     * @param {*} reason
-     * @returns
-     */
+   * Handles closing the snackbar feedback.
+   * @param {*} event
+   * @param {*} reason
+   * @returns
+   */
   const handleFeedbackClose = (event, reason) => {
     if (reason === "clickaway") return;
     setFeedbackOpen(false);
@@ -130,7 +111,7 @@ const ModerateArticle = () => {
       <h1>Moderate Articles</h1>
       <Box>
         {isLoading ? (
-          <><h2>Loading articles for moderation...</h2></>
+          <></>
         ) : (
           <ArticleTable
             data={articles}
