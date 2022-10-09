@@ -3,7 +3,7 @@ import { Box, Snackbar, Alert } from "@mui/material";
 import ArticleTable from "../components/Table";
 import { moderatorTableColumns } from "../components/TableColumns";
 import axios from "axios";
-import { deleteArticle, moderateArticle } from "../services/articlesService";
+import { deleteArticle, acceptArticle } from "../services/articlesService";
 
 const ModerateArticle = () => {
   // Current URL state
@@ -47,7 +47,7 @@ const ModerateArticle = () => {
    */
   const handleAccept = (id) => () => {
     setModerationLoading(true);
-    moderateArticle(id)
+    acceptArticle(id)
       .then((data) => {
         setFeedback(data.data.msg);
         setIsFeedbackError(false);
