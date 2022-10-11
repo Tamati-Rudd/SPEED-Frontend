@@ -4,8 +4,7 @@ import ArticleTable from "../components/Table";
 import { moderatorTableColumns } from "../components/TableColumns";
 import axios from "axios";
 import { deleteArticle, acceptArticle } from "../services/articlesService";
-import { config } from "../Config"
-
+import { config } from "../Config";
 
 const ModerateArticle = () => {
   // Current URL state
@@ -27,7 +26,7 @@ const ModerateArticle = () => {
     axios.get(`${config.expressUrls.MODERATE_VIEW_ARTICLE}`).then((res) => {
       setArticles(res.data);
       setIsLoading(false);
-    })
+    });
     //WIP: catching database errors but not needed
     // .catch((err) => {
     //   console.error(err);
@@ -54,16 +53,18 @@ const ModerateArticle = () => {
    * @returns
    */
   const handleAccept = (id) => () => {
+    if (!window.confirm("Are you sure you want to accept this acticle?"))
+      return;
     setModerationLoading(true);
     acceptArticle(id)
       .then((data) => {
-        setFeedback(data.data.msg);
+        setFeedback("Article has been accepted");
         setIsFeedbackError(false);
         deleteArticleFromState(id);
-        alert("Article has been accepted");
+        //alert("Article has been accepted");
       })
       .catch((data) => {
-        setFeedback(data.data.error);
+        setFeedback(data.response.data.error);
         setIsFeedbackError(true);
       })
       .finally(() => {
@@ -79,16 +80,18 @@ const ModerateArticle = () => {
    * @returns
    */
   const handleReject = (id) => () => {
+    if (!window.confirm("Are you sure you want to reject this acticle?"))
+      return;
     setModerationLoading(true);
     deleteArticle(id)
       .then((data) => {
-        setFeedback(data.data.msg);
+        setFeedback("Article has been rejected");
         setIsFeedbackError(false);
         deleteArticleFromState(id);
-        alert("Article has been rejected");
+        //alert("Article has been rejected");
       })
       .catch((data) => {
-        setFeedback(data.data.error);
+        setFeedback(data.response.data.error);
         setIsFeedbackError(true);
       })
       .finally(() => {
