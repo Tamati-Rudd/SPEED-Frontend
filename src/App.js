@@ -16,8 +16,13 @@ import ResponsiveAppBar from './components/Nav';
  * @returns Page components
  */
 
+/**
+ * Main page of the SPEED application
+ * @returns Page components
+ */
 function App() {
   return (
+
     <div className="App">
 <ResponsiveAppBar /> 
         <Routes>
@@ -32,6 +37,7 @@ function App() {
 </div>
 
   )
+
 }
 
 

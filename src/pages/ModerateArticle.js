@@ -1,26 +1,14 @@
-import {React, useState, useEffect} from "react";
+import { React, useState, useEffect } from "react";
 import { Box, Snackbar, Alert } from "@mui/material";
-import { useContext } from "react";
 import ArticleTable from "../components/Table";
-import { moderatorTableColumns } from "../components/tableColumns";
-import { CurrentUrlContext } from "../context/CurrentUrlContext";
-import { CurrentUserContext } from "../context/CurrentUserContext";
-import {
-  deleteArticle,
-  getArticle,
-  moderateArticle,
-} from "../services/articlesService";
-import axios from 'axios';
+import { moderatorTableColumns } from "../components/TableColumns";
+import axios from "axios";
+import { deleteArticle, moderateArticle } from "../services/articlesService";
+
 const ModerateArticle = () => {
   // Current URL state
-  const [, setSelectedUrl] = useContext(CurrentUrlContext);
-  const [, setCurrentUser] = useContext(CurrentUserContext);
-
-  // Articles
-  const [articles, setArticles] = useState([]);
-
-  // Loading states
-  const [isLoading, setIsLoading] = useState(true);
+  // const [, setSelectedUrl] = useContext(CurrentUrlContext);
+  // const [, setCurrentUser] = useContext(CurrentUserContext);
   const [moderationLoading, setModerationLoading] = useState(false);
 
   // Feedback state for Snackbar
@@ -28,39 +16,19 @@ const ModerateArticle = () => {
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const [isFeedbackError, setIsFeedbackError] = useState(false);
 
-  useEffect(() => {
-    // Navigation event from React Router
-    // if (document.referrer !== "") {
-    //   setSelectedUrl("/moderateArticle");
-    //   setCurrentUser("Moderator");
-    // }
-
-    // Grab all the articles and store it as state.
-    getArticle()
-      .then((data) => {
-        const articles = data.data.filter((article) => !article.moderated);
-        // title auther doi year moderated()
-        setArticles(articles.data);
-  
-      })
-      .catch((error) => {
-        console.error(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-
-
-  }, [setSelectedUrl, setCurrentUser]);
+  // Articles
+  const [articles, setArticles] = useState([]);
+  // Loading states
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const getArticles = async() =>{
-        const res = await axios.get(`http://localhost:4000/moderate/moderateArticles`); // http://localhost:4000/articles/view/ location of the article and submitted is the input from the user
-        setArticles(res.data);
-    }
-    getArticles();  
-}, [articles])
-/*
+    axios.get(`http://localhost:4000/moderate/moderateArticles`).then((res) => {
+      setArticles(res.data);
+      setIsLoading(false);
+    });
+  }, []);
+
+  /*
    * Deletes an article from the articles state array.
    *
    * @param {*} id
@@ -118,7 +86,7 @@ const ModerateArticle = () => {
         setModerationLoading(false);
       });
   };
-/**
+  /**
    * Handles closing the snackbar feedback.
    * @param {*} event
    * @param {*} reason

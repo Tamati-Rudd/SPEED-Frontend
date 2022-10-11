@@ -10,7 +10,7 @@ export const tableColumns = [
   {
     id: "author",
     label: "Authors",
-    minWidth: 170,
+    minWidth: 120,
     align: "right",
     format: (value) => value.toLocaleString("en-US"),
   },
@@ -24,7 +24,7 @@ export const tableColumns = [
   {
     id: "publication_year",
     label: "Publication Year",
-    minWidth: 100,
+    minWidth: 80,
     align: "right",
     format: (value) => value.toLocaleString("en-US"),
   },
@@ -38,7 +38,7 @@ export const tableColumns = [
   {
     id: "issue_number",
     label: "Issue Number",
-    minWidth: 170,
+    minWidth: 80,
     align: "right",
     format: (value) => value.toLocaleString("en-US"),
   },
@@ -60,7 +60,7 @@ export const tableColumns = [
   {
     id: "claimed_benefit",
     label: "Claimed Benefit",
-    minWidth: 170,
+    minWidth: 100,
     align: "right",
     format: (value) => value.toLocaleString("en-US"),
   },
@@ -71,7 +71,7 @@ export const moderatorTableColumns = [
   {
     id: "action",
     label: "Action",
-    minWidth: 170,
+    minWidth: 80,
     align: "right",
     format: (value) => value.toLocaleString("en-US"),
   },

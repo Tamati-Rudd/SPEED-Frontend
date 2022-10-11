@@ -1,5 +1,10 @@
 import { InputLabel, FormControl, MenuItem, Select } from "@mui/material";
 
+/**
+ * Reusable dropdown component used to change the number of rows shown on the table per page
+ * @param {*} param0 Data needed for the dropdown
+ * @returns Dropdown component
+ */
 const Dropdown = ({
     menuItems,
     selected,
