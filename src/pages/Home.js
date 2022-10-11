@@ -1,4 +1,5 @@
 import { React } from 'react';
+import {Box, Typography } from '@mui/material';
 
 /**
  * Home page for the SPEED website
@@ -7,10 +8,26 @@ import { React } from 'react';
 export default function Home() {
 
     return (
-        <div>
-            <h1>Welcome to SPEED! (in development)</h1>
-            <h3>Use the links above to test the website</h3>
-        </div>
+        <Box
+        sx={{
+          display: 'flex',
+          bgcolor: "#fff",
+          margin: "12px",
+        padding: "16px",
+          justifyContent: 'top',
+          alignItems: 'center',
+          flexDirection: 'column',
+          minHeight: '88vh',
+        }}
+      >
+      <Typography variant="h3" style={{ color: 'black' }}>
+      Welcome to SPEED! (in development)
+      </Typography>
+      <br></br>
+      <Typography variant="h6" style={{ color: 'black' }}>
+      Use the links above to test the website
+      </Typography>
+      </Box>
     )
 }
 
