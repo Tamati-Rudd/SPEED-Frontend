@@ -4,6 +4,7 @@ import ArticleTable from "../components/Table";
 import { moderatorTableColumns } from "../components/TableColumns";
 import axios from "axios";
 import { deleteArticle, moderateArticle } from "../services/articlesService";
+import { config } from "../Config"
 
 
 const ModerateArticle = () => {
@@ -23,15 +24,16 @@ const ModerateArticle = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(`http://localhost:4000/moderate/moderateArticles`).then((res) => {
+    axios.get(`${config.expressUrls.MODERATE_VIEW_ARTICLE}`).then((res) => {
       setArticles(res.data);
       setIsLoading(false);
     })
-    .catch((err) => {
-      console.error(err);
-      alert("database is not connected");
-      setIsLoading(true);
-    });
+    //WIP: catching database errors but not needed
+    // .catch((err) => {
+    //   console.error(err);
+    //   alert("database is not connected");
+    //   setIsLoading(true);
+    // });
   }, []);
 
   /*

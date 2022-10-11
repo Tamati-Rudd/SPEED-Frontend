@@ -10,8 +10,8 @@ export const getArticle = async () => {
 };
 
 export const moderateArticle = async (id) => {
-  return axios.put(
-    `${config.expressUrls.REJECT_ARTICLE}/${id}`
+  return axios.get(
+    `${config.expressUrls.ACCEPT_ARTICLE}/${id}`
   );
 };
 
