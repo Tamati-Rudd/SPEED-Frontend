@@ -55,7 +55,7 @@ const ModerateArticle = () => {
    */
   const handleAccept = (id) => () => {
     setModerationLoading(true);
-    moderateArticle(id)
+    acceptArticle(id)
       .then((data) => {
         setFeedback(data.data.msg);
         setIsFeedbackError(false);
