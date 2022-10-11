@@ -3,7 +3,7 @@ import { Box, Snackbar, Alert, Typography } from "@mui/material";
 import ArticleTable from "../components/Table";
 import { moderatorTableColumns } from "../components/TableColumns";
 import axios from "axios";
-import { deleteArticle, moderateArticle } from "../services/articlesService";
+import { deleteArticle, acceptArticle } from "../services/articlesService";
 import { config } from "../Config"
 
 
