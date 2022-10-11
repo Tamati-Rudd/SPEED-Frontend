@@ -5,12 +5,32 @@ import { tableColumns } from "../components/tableColumns";
 //import { ViewArticle } from '../Express';
 import axios from 'axios';
 
+
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
+import CircularProgress from '@mui/material/CircularProgress';
+
+
+/**
+ * Page for searching and viewing articles in SPEED
+ * @returns page components
+ */
 export default function ViewArticles() {
     //currently using useEffect to get the articles from the collection without useing express.js
     //currently displays the messages to the article page when serached with the correct data
 
     const [year, setYear] = useState("");
-    const [article, setArticle] = useState([]);  
+    const [article, setArticle] = useState([]);
+
+    const options = article.map((option) => {
+        const firstLetter = option.title[0].toUpperCase();
+        return {
+          firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
+          ...option
+        };
+      });
+
+
     //const [submitted, setSubmitted] = useState("");
 
 
@@ -69,23 +89,40 @@ export default function ViewArticles() {
 //<button onClick={onClickSubmit}>Search</button> 
 return (
         <Box
-        sx={{
-            bgcolor: "#fff",
-            margin: "12px",
-            padding: "16px",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-    }}
-    >
-        <h1>Articles</h1>
-        <Box>
-        <form>
-                <label htmlFor='year'>Publication Year: </label>
-                <input type="text" id="year" name="year" value={year} onChange={onChangeYear}></input>
-            </form>
-         <ArticleTable data={article} columns={tableColumns}/>
+            sx={{
+                bgcolor: "#fff",
+                margin: "12px",
+                padding: "16px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+            }}
+        >
+            <h1>Articles</h1>
+            {!article.length ?
+
+             <CircularProgress />
+             
+             :
+            <Box>
+                <form>
+
+                <Autocomplete
+      id="grouped-demo"
+      options={options.sort(
+          (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
+          )}
+          //groupBy={(option) => option.firstLetter}
+          getOptionLabel={(option) => option.title}
+          sx={{ width: 300 }}
+          renderInput={(params) => <TextField {...params} label="Title" />}
+          />
+                    <label htmlFor='year'>Publication Year: </label>
+                    <input type="text" id="year" name="year" value={year} onChange={onChangeYear}></input>
+                </form>
+                <ArticleTable data={article} columns={tableColumns} />
+            </Box>
+            }
         </Box>
-    </Box>
     )
 }
