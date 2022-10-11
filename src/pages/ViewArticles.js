@@ -6,6 +6,12 @@ import { moderatorTableColumns } from "../components/TableColumns";
 import axios from 'axios';
 import { config } from "../Config"
 
+
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
+import CircularProgress from '@mui/material/CircularProgress';
+
+
 /**
  * Page for searching and viewing articles in SPEED
  * @returns page components
@@ -13,6 +19,16 @@ import { config } from "../Config"
 export default function ViewArticles() {
     const [year, setYear] = useState("");
     const [article, setArticle] = useState([]);
+
+
+    const options = article.map((option) => {
+        const firstLetter = option.title[0].toUpperCase();
+        return {
+          firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
+          ...option
+        };
+      });
+
     //const [submitted, setSubmitted] = useState("");
     // WIP: testing useeffect with error handling
     // useEffect(() => {
@@ -77,13 +93,31 @@ export default function ViewArticles() {
             }}
         >
             <h1>Articles</h1>
+            {!article.length ?
+
+             <CircularProgress />
+             
+             :
             <Box>
                 <form>
+
+                <Autocomplete
+      id="grouped-demo"
+      options={options.sort(
+          (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
+          )}
+          //groupBy={(option) => option.firstLetter}
+          getOptionLabel={(option) => option.title}
+          sx={{ width: 300 }}
+          renderInput={(params) => <TextField {...params} label="Title" />}
+          />
                     <label htmlFor='year'>Publication Year: </label>
                     <input type="text" id="year" name="year" value={year} onChange={onChangeYear}></input>
                 </form>
-                <ArticleTable data={article} columns={moderatorTableColumns} />
+                <ArticleTable data={article} columns={tableColumns} />
             </Box>
+            }
+
         </Box>
     )
 }
