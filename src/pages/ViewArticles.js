@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from 'react';
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import ArticleTable from "../components/Table";
 import { tableColumns } from "../components/TableColumns";
 //import { ViewArticle } from '../Express';
@@ -95,7 +95,7 @@ export default function ViewArticles() {
             <h1>Articles</h1>
             {!article.length ?
 
-             <CircularProgress />
+             <><CircularProgress /><Typography>No Connection to backend</Typography></>
              
              :
             <Box>
