@@ -1,9 +1,11 @@
 import { React, useState, useEffect } from "react";
-import { Box, Snackbar, Alert } from "@mui/material";
+import { Box, Snackbar, Alert, Typography } from "@mui/material";
 import ArticleTable from "../components/Table";
 import { moderatorTableColumns } from "../components/TableColumns";
 import axios from "axios";
-import { deleteArticle, acceptArticle } from "../services/articlesService";
+import { deleteArticle, moderateArticle } from "../services/articlesService";
+import { config } from "../Config"
+
 
 const ModerateArticle = () => {
   // Current URL state
@@ -22,10 +24,16 @@ const ModerateArticle = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(`http://localhost:4000/moderate/moderateArticles`).then((res) => {
+    axios.get(`${config.expressUrls.MODERATE_VIEW_ARTICLE}`).then((res) => {
       setArticles(res.data);
       setIsLoading(false);
-    });
+    })
+    //WIP: catching database errors but not needed
+    // .catch((err) => {
+    //   console.error(err);
+    //   alert("database is not connected");
+    //   setIsLoading(true);
+    // });
   }, []);
 
   /*
@@ -52,6 +60,7 @@ const ModerateArticle = () => {
         setFeedback(data.data.msg);
         setIsFeedbackError(false);
         deleteArticleFromState(id);
+        alert("Article has been accepted");
       })
       .catch((data) => {
         setFeedback(data.data.error);
@@ -76,6 +85,7 @@ const ModerateArticle = () => {
         setFeedback(data.data.msg);
         setIsFeedbackError(false);
         deleteArticleFromState(id);
+        alert("Article has been rejected");
       })
       .catch((data) => {
         setFeedback(data.data.error);
@@ -111,7 +121,7 @@ const ModerateArticle = () => {
       <h1>Moderate Articles</h1>
       <Box>
         {isLoading ? (
-          <></>
+          <Typography>No Articles to Moderate</Typography>
         ) : (
           <ArticleTable
             data={articles}

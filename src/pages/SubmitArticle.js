@@ -3,6 +3,8 @@ import FormInput from '../components/FormInput';
 import { FormQuestions } from '../components/FormQuestions';
 import { submitArticle } from '../Express';
 
+
+import { Box, Button } from "@mui/material";
 /**
  * This page handles the entry and submission of article details
  * @returns page components
@@ -34,16 +36,32 @@ export default function SubmitArticle() {
     }
 
     return (
+
+        <Box
+        sx={{
+            bgcolor: "#fff",
+            margin: "12px",
+            padding: "16px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+        }}
+    >
+        <Box>
+
         <div>
             <h2>Submit an Article</h2>
             <p>* required</p>
             <form>
                 {FormQuestions ? FormQuestions.map((question, key) => (
                     <FormInput question={question} key={key} />
-                )) : <h4>Failed to load form questions</h4>}
+                    )) : <h4>Failed to load form questions</h4>}
             </form>
-            <button className="submitButton" onClick={onClickSubmit}>Submit</button>
+            <Button className="submitButton" variant="contained" onClick={onClickSubmit}>Submit</Button>
             <br />
         </div>
+    
+        </Box>
+        </Box>
     )
 }
