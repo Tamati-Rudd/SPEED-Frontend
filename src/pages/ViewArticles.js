@@ -114,7 +114,7 @@ export default function ViewArticles() {
                     <label htmlFor='year'>Publication Year: </label>
                     <input type="text" id="year" name="year" value={year} onChange={onChangeYear}></input>
                 </form>
-                <ArticleTable data={article} columns={moderatorTableColumns} />
+                <ArticleTable data={article} columns={tableColumns} />
             </Box>
             }
 
