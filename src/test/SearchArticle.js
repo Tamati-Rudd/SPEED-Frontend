@@ -1,18 +1,18 @@
 
 // example of a user input to the serach bar
-let userinput = "articlename";
+let articleinput = "articlename";
 
 // checking if the user has input field
 function serachArticlesTester() {
-    if(serachArticles(userinput) !== '') {
+    if(serachArticles(articleinput) !== '') {
         console.log("✔ Test Passed"); // if test has passed
     }else{
         console.error("❌ Test Failed"); // if test has failed
     }
 }
 // function to check that the usre has input and reuturn the user input
-function serachArticles(input) {
-    return input;
+function serachArticles(article) {
+    return article;
 }
 
 

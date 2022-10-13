@@ -1,18 +1,18 @@
 
 // example of a user input to the serach bar
-let userinput = "userupload";
+let userUpload = "userupload";
 
 // checking if the user has input field
 function uploadArticlesTester() {
-    if(uploadArticles(userinput) !== '') {
+    if(uploadArticles(userUpload) !== '') {
         console.log("✔ Test Passed"); // if test has passed
     }else{
         console.error("❌ Test Failed"); // if test has failed
     }
 }
 // function to check that the usre has input and return the user input
-function uploadArticles(input) {
-    return input;
+function uploadArticles(uploadInput) {
+    return uploadInput;
 }
 
 
