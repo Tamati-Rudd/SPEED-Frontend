@@ -45,6 +45,7 @@ export default function FormInput(props) {
           <TextField
             id={inputSettings.field}
             name={inputSettings.field}
+            title={inputSettings.field}
             type={inputSettings.type}
             size="75"
             placeholder={inputSettings.placeholder}
