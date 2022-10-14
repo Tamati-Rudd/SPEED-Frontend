@@ -2,8 +2,8 @@ import { React } from "react";
 import FormInput from "../components/FormInput";
 import { FormQuestions } from "../components/FormQuestions";
 import { submitArticle } from "../Express";
-
 import { Box, Button, Stack } from "@mui/material";
+
 /**
  * This page handles the entry and submission of article details
  * @returns page components

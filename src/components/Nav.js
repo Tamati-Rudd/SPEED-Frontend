@@ -48,7 +48,7 @@ import {Link} from 'react-router-dom';
 </Menu>
 </Box>  */
 
-const pages = ['home', 'submit', 'articles', 'moderate', 'analyst'];
+const pages = ['home', 'submit', 'articles', 'moderate', 'analyse'];
 //WIP: used for profile links
 //const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
