@@ -11,6 +11,7 @@ export const FormQuestions = [
         analystOnly: false,
         disabled: false,
         required: true,
+        validation: "not empty",
         input: ""  
     }, 
     {
@@ -21,6 +22,7 @@ export const FormQuestions = [
         analystOnly: false,
         disabled: false,
         required: true,
+        validation: "not empty",
         input: ""
     }, 
     {
@@ -31,6 +33,7 @@ export const FormQuestions = [
         analystOnly: false,
         disabled: false,
         required: true,
+        validation: "not empty",
         input: ""
     },
     {
@@ -41,6 +44,7 @@ export const FormQuestions = [
         analystOnly: false,
         disabled: false,
         required: true,
+        validation: "year",
         input: ""
     },
     {
@@ -51,6 +55,7 @@ export const FormQuestions = [
         analystOnly: false,
         disabled: false,
         required: false,
+        validation: "",
         input: ""
     },
     {
@@ -61,6 +66,7 @@ export const FormQuestions = [
         analystOnly: false,
         disabled: false,
         required: false,
+        validation: "",
         input: ""
     },
     {
@@ -71,6 +77,7 @@ export const FormQuestions = [
         analystOnly: false,
         disabled: false,
         required: false,
+        validation: "",
         input: ""
     }, 
     {
@@ -80,7 +87,8 @@ export const FormQuestions = [
         placeholder: "Enter SE practice",
         analystOnly: true,
         disabled: false,
-        required: false,
+        required: true,
+        validation: "not empty (analyst)",
         input: ""
     },
     {
@@ -90,7 +98,8 @@ export const FormQuestions = [
         placeholder: "Enter benefit claim",
         analystOnly: true,
         disabled: false,
-        required: false,
+        required: true,
+        validation: "not empty (analyst)",
         input: ""
     },
     {
@@ -100,7 +109,8 @@ export const FormQuestions = [
         placeholder: "Enter evidence level",
         analystOnly: true,
         disabled: false,
-        required: false,
+        required: true,
+        validation: "level",
         input: ""
     }
 ]

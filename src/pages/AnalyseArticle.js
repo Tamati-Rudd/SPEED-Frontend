@@ -37,40 +37,56 @@ export default function AnalyseArticle() {
         getAcceptedArticles();
     }, []);
 
-    useEffect(() => {
-        console.log(selectedOption)
-    }, [selectedOption]);
+    /**
+     * Update the selected article and reset the input form
+     * @param {*} e selected article
+     */
+    const updateSelected = (e) => {
+        setSelectedOption("");
+        setTimeout(() => setSelectedOption(e.value), 1);
+    }
 
     /**
      * Handle pressing of the submit button
      */
     const onClickSubmit = () => {
-        console.log("TODO: SUBMIT");
-    };
+        //Build article data JSON and validate input
+        let articleData = {};
+        let valid = true;
+        let feedback = "Please enter the following before submitting\n"
+        FormQuestions.forEach((question) => {
+            articleData[question.field] = question.input.trim();
+            switch (question.validation) {
+                case "not empty": //Test for empty input
+                case "not empty (analyst)":
+                    if (question.input.trim() === "") {
+                        valid = false;
+                        feedback += `${question.label} fill out this field\n`
+                    }
+                    break;
+                case "year": //Test year regex
+                    if (!question.input.match(/^\d{4}$/)) {
+                        valid = false;
+                        feedback += `${question.label} enter a year value\n`
+                    }
+                    break;
+                case "level": //Test for evidence level
+                    if (!["high", "medium", "low"].includes(question.input.toLowerCase().trim())) {    
+                        valid = false;
+                        feedback += `${question.label} enter an evidence level (High, Medium or Low)\n`
+                    }
+                    break;
+                default: //No validation
+                    break;
+            }
+        });
 
-    const updateSelected = (e) => {
-        setSelectedOption("");
-        setTimeout(() => setSelectedOption(e.value), 1);
-        
-        // console.log(selectedOption.value);
-        // if (selectedOption.value[question.field]) {
-        //     return selectedOption.value[question.field];
-        // } else {
-        //     return "";
-        // }
-        // console.log(article);
-        // FormQuestions.forEach(question => {
-            
-            
-        //     if (article[question.field]) {
-        //         console.log(article[question.field])
-        //         question.input = article[question.field]
-                
-        //     }
-        //     console.log(question.input);
-        //     // 
-        // })
-    }
+        if (valid) {
+            console.log("SUCCESS");
+        } else {
+            alert(feedback);
+        }
+    };
 
     return (
         <Box
@@ -97,29 +113,23 @@ export default function AnalyseArticle() {
                             isSearchable={true}
                         />
                         <br />
-
                         {selectedOption === "" ? null :
                             <>
                                 <p>* required</p>
                                 <form>
-                                {FormQuestions ? (
-                                    FormQuestions.map((question, key) => (
-                                        <FormInput question={question} input={selectedOption[question.field]} key={key} />
-                                    ))
-                                ) : (
-                                    <h4>Failed to load form questions</h4>
-                                )}
+                                    {FormQuestions ? (
+                                        FormQuestions.map((question, key) => (
+                                            <FormInput question={question} input={selectedOption[question.field]} key={key} />
+                                        ))
+                                    ) : (
+                                        <h4>Failed to load form questions</h4>
+                                    )}
                                 </form>
                                 <Button variant="contained" onClick={onClickSubmit}>
                                     Submit Analysis
                                 </Button>
                             </>
-
                         }
-
-                       
-
-                        <br />
                     </Stack>
                 </Stack>
             </Box>
