@@ -1,7 +1,7 @@
 import { React } from "react";
 import FormInput from "../components/FormInput";
 import { FormQuestions } from "../components/FormQuestions";
-import { submitArticle } from "../Express";
+import { submitArticle } from "../services/Express";
 import { Box, Button, Stack } from "@mui/material";
 
 /**
@@ -61,7 +61,7 @@ export default function SubmitArticle() {
             <form>
               {FormQuestions ? (
                 FormQuestions.map((question, key) => (
-                  <FormInput question={question} key={key} />
+                  question.analystOnly ? null : <FormInput question={question} input={""} key={key} />
                 ))
               ) : (
                 <h4>Failed to load form questions</h4>

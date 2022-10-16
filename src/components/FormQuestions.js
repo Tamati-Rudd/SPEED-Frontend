@@ -8,15 +8,17 @@ export const FormQuestions = [
         label: "Title: ",
         type: "text",
         placeholder: "Enter article title",
+        analystOnly: false,
         disabled: false,
         required: true,
-        input: ""
+        input: ""  
     }, 
     {
         field: "author",
         label: "Author(s): ",
         type: "text",
         placeholder: "Enter article author(s)",
+        analystOnly: false,
         disabled: false,
         required: true,
         input: ""
@@ -26,6 +28,7 @@ export const FormQuestions = [
         label: "Article Source: ",
         type: "text",
         placeholder: "Enter article source",
+        analystOnly: false,
         disabled: false,
         required: true,
         input: ""
@@ -35,6 +38,7 @@ export const FormQuestions = [
         label: "Publication Year: ",
         type: "number",
         placeholder: "Enter publication year",
+        analystOnly: false,
         disabled: false,
         required: true,
         input: ""
@@ -44,6 +48,7 @@ export const FormQuestions = [
         label: "Volume Number: ",
         type: "number",
         placeholder: "Enter volume number",
+        analystOnly: false,
         disabled: false,
         required: false,
         input: ""
@@ -53,6 +58,7 @@ export const FormQuestions = [
         label: "Issue Number: ",
         type: "number",
         placeholder: "Enter issue number",
+        analystOnly: false,
         disabled: false,
         required: false,
         input: ""
@@ -62,6 +68,7 @@ export const FormQuestions = [
         label: "Digital Object Identifer (DOI): ",
         type: "text",
         placeholder: "Enter DOI",
+        analystOnly: false,
         disabled: false,
         required: false,
         input: ""
@@ -71,6 +78,7 @@ export const FormQuestions = [
         label: "Software Engineering (SE) Practice: ",
         type: "text",
         placeholder: "Enter SE practice",
+        analystOnly: true,
         disabled: false,
         required: false,
         input: ""
@@ -80,6 +88,17 @@ export const FormQuestions = [
         label: "Benefit Claim: ",
         type: "text",
         placeholder: "Enter benefit claim",
+        analystOnly: true,
+        disabled: false,
+        required: false,
+        input: ""
+    },
+    {
+        field: "level_of_evidence",
+        label: "Level of Evidence: ",
+        type: "text",
+        placeholder: "Enter evidence level",
+        analystOnly: true,
         disabled: false,
         required: false,
         input: ""

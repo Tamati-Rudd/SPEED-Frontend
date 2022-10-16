@@ -11,6 +11,8 @@ const prod = {
         MODERATE_VIEW_ARTICLE: `${prodRoot}/moderate/moderateArticles`,
         ACCEPT_ARTICLE: `${prodRoot}/moderate/moderateArticles/accepted`,
         REJECT_ARTICLE: `${prodRoot}/moderate/moderateArticles/rejected`,
+        ANALYSE_RETRIEVE_ARTICLES: `${prodRoot}/analyse/retrieve`,
+        ANALYSE_SUBMIT: `${prodRoot}/analyse/submit`,
         VIEW_ARTICLE: `${prodRoot}/articles/view`
     }
 };
@@ -22,6 +24,8 @@ const dev = {
         MODERATE_VIEW_ARTICLE: `${devRoot}/moderate/moderateArticles`,
         ACCEPT_ARTICLE: `${devRoot}/moderate/moderateArticles/accepted`,
         REJECT_ARTICLE: `${devRoot}/moderate/moderateArticles/rejected`,
+        ANALYSE_RETRIEVE_ARTICLES: `${devRoot}/analyse/retrieve`,
+        ANALYSE_SUBMIT: `${devRoot}/analyse/submit`,
         VIEW_ARTICLE: `${devRoot}/articles/view`
     }
 };
