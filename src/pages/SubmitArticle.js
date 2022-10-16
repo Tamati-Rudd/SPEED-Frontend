@@ -3,12 +3,14 @@ import FormInput from "../components/FormInput";
 import { FormQuestions } from "../components/FormQuestions";
 import { submitArticle } from "../services/Express";
 import { Box, Button, Stack } from "@mui/material";
+import { useNavigate } from "react-router";
 
 /**
  * This page handles the entry and submission of article details
  * @returns page components
  */
 export default function SubmitArticle() {
+  const navigate = useNavigate();
 
   /**
    * Handle pressing of the submit button
@@ -47,9 +49,9 @@ export default function SubmitArticle() {
       submitArticle(articleData)
         .then(() => {
           alert("Your article has been submitted for review!");
+          navigate("/home");
         })
         .catch((err) => {
-          console.error(err);
           alert(
             "An error occured while attempting to submit your article. Please try again later"
           );

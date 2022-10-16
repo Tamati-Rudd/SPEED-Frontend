@@ -15,27 +15,30 @@ export default function AnalyseArticle() {
     const [noOptionsMessage, setNoOptionsMessage] = useState("Loading articles...");
 
     /**
-     * On render, retrieve the list of articles. If successful, populate the dropdown
+     * On render, call getAcceptedArticles
      */
     useEffect(() => {
-        const getAcceptedArticles = async () => {
-            let acceptedArticles = await retrieveAcceptedArticles();
-            if (acceptedArticles === 1) { //No articles found
-                setNoOptionsMessage("No remaining articles to analyse");
-            } else if (acceptedArticles === 2) { //Network/server error
-                setNoOptionsMessage("A network or server error occured. Please try again later");
-            } else { //Setup options array for dropdown
-                let buildOptions = [];
-                acceptedArticles.map((article, key) => (
-                    buildOptions.push({ value: article, label: article.title, key: key })
-                ));
-                setArticleOptions(buildOptions);
-                setNoOptionsMessage("No remaining articles to analyse");
-            }
-        }
-
         getAcceptedArticles();
     }, []);
+
+    /**
+     * Retrieve the list of accepted articles, and populate the dropdown list with the article titles
+     */
+    const getAcceptedArticles = async () => {
+        let acceptedArticles = await retrieveAcceptedArticles();
+        if (acceptedArticles === 1) { //No articles found
+            setNoOptionsMessage("No remaining articles to analyse");
+        } else if (acceptedArticles === 2) { //Network/server error
+            setNoOptionsMessage("A network or server error occured. Please try again later");
+        } else { //Setup options array for dropdown
+            let buildOptions = [];
+            acceptedArticles.map((article, key) => (
+                buildOptions.push({ value: article, label: article.title, key: key })
+            ));
+            setArticleOptions(buildOptions);
+            setNoOptionsMessage("No remaining articles to analyse");
+        }
+    }
 
     /**
      * Update the selected article and reset the input form
@@ -81,8 +84,17 @@ export default function AnalyseArticle() {
             }
         });
 
+        //If validation passed, submit the analysis and make the article searchable on SPEED
         if (valid) {
-            console.log("SUCCESS");
+            articleData._id = selectedOption._id;
+            submitAnalysis(articleData)
+                .then(() => { //Reset page
+                    alert("Your analysis has been submitted, and the article is now searchable on SPEED");
+                    setArticleOptions([]);
+                    setSelectedOption("");
+                    getAcceptedArticles();
+                })
+                .catch((err) => {})
         } else {
             alert(feedback);
         }
