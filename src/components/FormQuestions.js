@@ -113,13 +113,4 @@ export const FormQuestions = [
         validation: "level",
         input: ""
     },  
-    {
-        field: "File",
-        label: "Bibliography: ",
-        type: "text",
-        placeholder: "Enter or paste a URL here",
-        disabled: false,
-        required: true,
-        input: ""
-    }, 
 ]

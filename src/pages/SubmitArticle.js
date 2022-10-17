@@ -10,7 +10,7 @@ import bibtexParse from "bibtex-parse-js";
  * @returns page components
  */
 export default function SubmitArticle() {
-  const navigate = useNavigate();
+// const navigate = useNavigate();
 
   /**
    * Handle pressing of the submit button
@@ -49,7 +49,7 @@ export default function SubmitArticle() {
       submitArticle(articleData)
         .then(() => {
           alert("Your article has been submitted for review!");
-          navigate("/home");
+          //navigate("/home");
         })
         .catch((err) => {
           alert(
@@ -73,10 +73,6 @@ export default function SubmitArticle() {
     };
     fileReader.readAsText(file);
   }
-
-
-
-
 
   return (
     <Box
@@ -105,7 +101,7 @@ export default function SubmitArticle() {
             </form>
 
             <input type="file" onChange={handleFileUpload} accept=".bibtex"></input>
-      <p id="fileUploadInfo">
+            <p id="fileUploadInfo">
         Accepted file formats include bibtex. Only upload one article per bibtex
         file.
       </p>
