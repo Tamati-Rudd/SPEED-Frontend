@@ -14,7 +14,7 @@ export default function FormInput(props) {
     placeholder: props.question.placeholder, //Placeholder text for the question
     disabled: props.question.disabled, //Whether the question input can be edited
     required: props.question.required, //Whether the question input is required
-    input: "", //User response
+    input: props.input, //User response
   });
 
   /**
