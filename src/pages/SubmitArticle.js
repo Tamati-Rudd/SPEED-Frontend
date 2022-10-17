@@ -3,6 +3,7 @@ import FormInput from "../components/FormInput";
 import { FormQuestions } from "../components/FormQuestions";
 import { submitArticle } from "../Express";
 import { Box, Button, Stack } from "@mui/material";
+import bibtexParse from "bibtex-parse-js";
 
 /**
  * This page handles the entry and submission of article details
@@ -42,6 +43,23 @@ export default function SubmitArticle() {
     }
   };
 
+  function handleFileUpload(e) {
+    let file = e.target.files[0];
+    let fileReader = new FileReader();
+    fileReader.onload = function (e) {
+      console.log(e.target.result);
+
+      let parsedFile = bibtexParse.toJSON(e.target.result);
+
+      FormInput(parsedFile[0].entryTags);
+    };
+    fileReader.readAsText(file);
+  }
+
+
+
+
+
   return (
     <Box
       sx={{
@@ -57,7 +75,7 @@ export default function SubmitArticle() {
         <Stack gap={4}>
           <Stack spacing={1} alignItems="center">
             <h1>Submit an Article</h1>
-            <p>* required</p>
+            <p>*required</p>
             <form>
               {FormQuestions ? (
                 FormQuestions.map((question, key) => (
@@ -67,6 +85,15 @@ export default function SubmitArticle() {
                 <h4>Failed to load form questions</h4>
               )}
             </form>
+
+            <input type="file" onChange={handleFileUpload} accept=".bibtex"></input>
+      <p id="fileUploadInfo">
+        Accepted file formats include bibtex. Only upload one article per bibtex
+        file.
+      </p>
+      &nbsp;
+      &nbsp;
+      
             <Button variant="contained" onClick={onClickSubmit}>
               Submit
             </Button>

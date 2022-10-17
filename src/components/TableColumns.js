@@ -64,6 +64,13 @@ export const tableColumns = [
     align: "right",
     format: (value) => value.toLocaleString("en-US"),
   },
+  {
+    id: "bibliography",
+    label: "Bibliography",
+    minWidth: 100,
+    align: "right",
+    format: (value) => value.toLocaleString("en-US"),
+  },
 ];
 
 export const moderatorTableColumns = [
