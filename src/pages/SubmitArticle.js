@@ -1,7 +1,7 @@
 import { React } from "react";
 import FormInput from "../components/FormInput";
 import { FormQuestions } from "../components/FormQuestions";
-import { submitArticle } from "../Express";
+import { submitArticle } from "../services/Express";
 import { Box, Button, Stack } from "@mui/material";
 import bibtexParse from "bibtex-parse-js";
 
@@ -10,36 +10,54 @@ import bibtexParse from "bibtex-parse-js";
  * @returns page components
  */
 export default function SubmitArticle() {
+  const navigate = useNavigate();
+
   /**
    * Handle pressing of the submit button
    */
   const onClickSubmit = () => {
-    if (
-      FormQuestions[0].input !== "" &&
-      FormQuestions[1].input !== "" &&
-      FormQuestions[2].input !== "" &&
-      FormQuestions[3].input.match(/^\d{4}$/)
-    ) {
-      //Build articleData JSON
-      let articleData = {};
-      FormQuestions.forEach((question) => {
-        articleData[question.field] = question.input;
-      });
+    //Build article data JSON and validate input
+    let articleData = {};
+    let valid = true;
+    let feedback = "Please enter the following before submitting\n"
+    FormQuestions.forEach((question) => {
+      articleData[question.field] = question.input.trim();
+      switch (question.validation) {
+        case "not empty": //Test for empty input
+          if (question.input === "") {
+            valid = false;
+            feedback += `${question.label} fill out this field\n`
+          }
+          break;
+        case "year": //Test year regex
+          if (!question.input.match(/^\d{4}$/)) {
+            valid = false;
+            feedback += `${question.label} enter a year value\n`
+          }
+          break;
+        default: //No validation
+          break;
+      }
+    });
+
+    if (valid) {
+      articleData.se_practice = "";
+      articleData.claimed_benefit = "";
       articleData.level_of_evidence = "";
 
       //Submit article
       submitArticle(articleData)
         .then(() => {
           alert("Your article has been submitted for review!");
+          navigate("/home");
         })
         .catch((err) => {
-          console.error(err);
           alert(
             "An error occured while attempting to submit your article. Please try again later"
           );
         });
     } else {
-      alert("Please fill out all required fields");
+      alert(feedback);
     }
   };
 
@@ -79,7 +97,7 @@ export default function SubmitArticle() {
             <form>
               {FormQuestions ? (
                 FormQuestions.map((question, key) => (
-                  <FormInput question={question} key={key} />
+                  question.analystOnly ? null : <FormInput question={question} input={""} key={key} />
                 ))
               ) : (
                 <h4>Failed to load form questions</h4>
