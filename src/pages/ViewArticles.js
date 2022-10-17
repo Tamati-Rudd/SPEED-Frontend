@@ -17,43 +17,44 @@ import CircularProgress from '@mui/material/CircularProgress';
  * @returns page components
  */
 export default function ViewArticles() {
-    const [year, setYear] = useState("");
+    //article list
     const [article, setArticle] = useState([]);
+    
+    //find article by year
+    const [year, setYear] = useState("");
+    // find article by practice
+    const [selectedPractice, setselectedPractice] = useState([]);
 
-
-    const options = article.map((option) => {
-        const firstLetter = option.title[0].toUpperCase();
-        return {
-          firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
-          ...option
-        };
-      });
-
-    //const [submitted, setSubmitted] = useState("");
     // WIP: testing useeffect with error handling
     // useEffect(() => {
-    //     const getArticle = async() =>{
-    //         // try{
+    //     ViewArticle().then((data)=> {
+    //         const practices = data.map((practice) => practice.practice);
+    //     }) 
 
-    //             const res = await axios.get(`http://localhost:4000/articles/view/${year}`)
-    //             if (res.status === 200){
-    //                 setArticle(res.data);
-    //             }
-    //             if (res.status === 404){
-    //                 alert("Error getting article");
-    //             }
-    //         }
-    //         // }catch(e){
+    // }, []);
 
-    //         //     if    (setArticle() !== []){
-    //         //         alert("Error getting article");
-    //         //     }
-    //         // }
-    //          //location of the article and submitted is the input from the user
 
+    // const searchPractice = (article) => {
+    //     if (!article) {
+    //         ViewArticle() 
+    //         .then(({ data }) => {
+    //           setArticle(
+    //             data.filter((data) => data.sepractice === selectedPractice)
+    //           );
+    //         })
+    //         .catch((error) => {
+    //           console.error(error);
+    //         });
+    //     } else {
+    //         ViewArticle()
+    //         .then(({ data }) => {
+    //           setArticle(data.filter((data) => data.title === article));
+    //         })
+    //         .catch((error) => {
+    //           console.error(error);
+    //         });
     //     }
-    //     getArticle();
-    // }, [year])
+    //   };
 
 
     /**
@@ -99,18 +100,17 @@ export default function ViewArticles() {
              
              :
             <Box>
+                            <Autocomplete
+              id="article-search"
+              options={article.map((option) => option.publication_year)}
+              renderInput={(params) => (
+                <TextField {...params} label="Search Articles" />
+              )}
+              onChange={(event, newInputValue) => {
+                searchPractice(newInputValue);
+              }}
+            />
                 <form>
-
-                <Autocomplete
-      id="grouped-demo"
-      options={options.sort(
-          (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
-          )}
-          //groupBy={(option) => option.firstLetter}
-          getOptionLabel={(option) => option.title}
-          sx={{ width: 300 }}
-          renderInput={(params) => <TextField {...params} label="Title" />}
-          />
                     <label htmlFor='year'>Publication Year: </label>
                     <input type="text" id="year" name="year" value={year} onChange={onChangeYear}></input>
                 </form>

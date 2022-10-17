@@ -26,9 +26,9 @@ export async function submitArticle(articleData) {
  * @param {*} year 
  * @returns article, or an error state
  */
-export async function ViewArticle(year) {
+export async function ViewArticle() {
     try {
-        let response = await axios.get(`${config.expressUrls.VIEW_ARTICLE}/${year}`, { timeout: 10000 });
+        let response = await axios.get(`${config.expressUrls.VIEW_ARTICLE}`, { timeout: 10000 });
         if (response.status === 200) {
             return response;
         }
