@@ -1,16 +1,18 @@
-import { React } from "react";
+import { useState, React } from "react";
 import FormInput from "../components/FormInput";
 import { FormQuestions } from "../components/FormQuestions";
 import { submitArticle } from "../services/Express";
 import { Box, Button, Stack } from "@mui/material";
-import { useNavigate } from "react-router";
+import bibtexParse from "bibtex-parse-js";
 
 /**
  * This page handles the entry and submission of article details
  * @returns page components
  */
 export default function SubmitArticle() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+
+  const [questions, setquestions] = useState(FormQuestions);
 
   /**
    * Handle pressing of the submit button
@@ -19,20 +21,20 @@ export default function SubmitArticle() {
     //Build article data JSON and validate input
     let articleData = {};
     let valid = true;
-    let feedback = "Please enter the following before submitting\n"
-    FormQuestions.forEach((question) => {
+    let feedback = "Please enter the following before submitting\n";
+    questions.forEach((question) => {
       articleData[question.field] = question.input.trim();
       switch (question.validation) {
         case "not empty": //Test for empty input
           if (question.input === "") {
             valid = false;
-            feedback += `${question.label} fill out this field\n`
+            feedback += `${question.label} fill out this field\n`;
           }
           break;
         case "year": //Test year regex
           if (!question.input.match(/^\d{4}$/)) {
             valid = false;
-            feedback += `${question.label} enter a year value\n`
+            feedback += `${question.label} enter a year value\n`;
           }
           break;
         default: //No validation
@@ -49,7 +51,7 @@ export default function SubmitArticle() {
       submitArticle(articleData)
         .then(() => {
           alert("Your article has been submitted for review!");
-          navigate("/home");
+          //navigate("/home");
         })
         .catch((err) => {
           alert(
@@ -60,6 +62,43 @@ export default function SubmitArticle() {
       alert(feedback);
     }
   };
+
+  function handleFileUpload(e) {
+    let file = e.target.files[0];
+    let fileReader = new FileReader();
+    fileReader.onload = function (e) {
+      console.log(e.target.result);
+      let parsedFile = bibtexParse.toJSON(e.target.result);
+      let entry = parsedFile[0];
+      let title = entry.entryTags.title;
+      let author = entry.entryTags.author;
+      let source = entry.entryTags.journal;
+      let year = entry.entryTags.year;
+
+      let updatedQuestion = questions.map((question) => {
+        switch (question.field) {
+          case "title":
+            question.input = title;
+            break;
+          case "author":
+            question.input = author;
+            break;
+          case "source":
+            question.input = source;
+            break;
+          case "publication_year":
+            question.input = year;
+            break;
+          default:
+          // do nothing
+        }
+        return question;
+      });
+
+      setquestions(updatedQuestion);
+    };
+    if (file) fileReader.readAsText(file);
+  }
 
   return (
     <Box
@@ -76,16 +115,32 @@ export default function SubmitArticle() {
         <Stack gap={4}>
           <Stack spacing={1} alignItems="center">
             <h1>Submit an Article</h1>
-            <p>* required</p>
+            <p>*required</p>
             <form>
-              {FormQuestions ? (
-                FormQuestions.map((question, key) => (
-                  question.analystOnly ? null : <FormInput question={question} input={""} key={key} />
-                ))
+              {questions ? (
+                questions.map((question, key) =>
+                  question.analystOnly ? null : (
+                    <FormInput
+                      question={question}
+                      input={question.input}
+                      key={question.field}
+                    />
+                  )
+                )
               ) : (
                 <h4>Failed to load form questions</h4>
               )}
             </form>
+            <input
+              type="file"
+              onChange={handleFileUpload}
+              accept=".bibtex"
+            ></input>
+            <p id="fileUploadInfo">
+              Accepted file formats include bibtex. Only upload one article per
+              bibtex file.
+            </p>
+            &nbsp; &nbsp;
             <Button variant="contained" onClick={onClickSubmit}>
               Submit
             </Button>

@@ -112,5 +112,5 @@ export const FormQuestions = [
         required: true,
         validation: "level",
         input: ""
-    }
+    },  
 ]
