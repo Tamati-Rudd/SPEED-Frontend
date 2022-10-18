@@ -7,15 +7,27 @@ import { Typography, Box, Grid } from "@mui/material";
  * @param {*} props question data
  */
 export default function FormInput(props) {
-  const [inputSettings, setInputSettings] = useState({
-    label: props.question.label, //Display text of the question
-    field: props.question.field, //Name/ID of the question
-    type: props.question.type, //Type of the question
-    placeholder: props.question.placeholder, //Placeholder text for the question
-    disabled: props.question.disabled, //Whether the question input can be edited
-    required: props.question.required, //Whether the question input is required
-    input: props.input, //User response
-  });
+  const [inputSettings, setInputSettings] = useState({});
+
+  useEffect(() => {
+    setInputSettings({
+      label: props.question.label, //Display text of the question
+      field: props.question.field, //Name/ID of the question
+      type: props.question.type, //Type of the question
+      placeholder: props.question.placeholder, //Placeholder text for the question
+      disabled: props.question.disabled, //Whether the question input can be edited
+      required: props.question.required, //Whether the question input is required
+      input: props.input, //User response
+    });
+  }, [
+    props.input,
+    props.question.disabled,
+    props.question.field,
+    props.question.label,
+    props.question.placeholder,
+    props.question.required,
+    props.question.type,
+  ]);
 
   /**
    * Handle the user input being changed
@@ -31,6 +43,7 @@ export default function FormInput(props) {
   useEffect(() => {
     props.question["input"] = inputSettings.input;
   }, [inputSettings, props.question]);
+
 
   return (
     <Box sx={{ flexGrow: 1 }} className="FormInputDiv">
