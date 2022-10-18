@@ -68,8 +68,7 @@ export default function SubmitArticle() {
       console.log(e.target.result);
 
       let parsedFile = bibtexParse.toJSON(e.target.result);
-
-      FormInput(parsedFile[0].entryTags);
+       console.log(parsedFile);
     };
     fileReader.readAsText(file);
   }
@@ -93,7 +92,7 @@ export default function SubmitArticle() {
             <form>
               {FormQuestions ? (
                 FormQuestions.map((question, key) => (
-                  question.analystOnly ? null : <FormInput question={question} input={""} key={key} />
+                  question.analystOnly ? null : <FormInput question={question} input={question.input} key={key} />
                 ))
               ) : (
                 <h4>Failed to load form questions</h4>
