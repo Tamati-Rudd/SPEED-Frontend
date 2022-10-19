@@ -56,13 +56,13 @@ export default function FormInput(props) {
         </Grid>
         <Grid item xs={8}>
           <TextField
-            id={inputSettings.field}
+            id={inputSettings.field} 
             name={inputSettings.field}
             title={inputSettings.field}
             type={inputSettings.type}
             size="75"
             placeholder={inputSettings.placeholder}
-            value={inputSettings.input}
+            value={inputSettings.input}// user input
             required={inputSettings.required}
             disabled={inputSettings.disabled}
             onChange={handleInputChange}
