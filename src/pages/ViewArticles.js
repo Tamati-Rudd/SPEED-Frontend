@@ -1,12 +1,10 @@
 import { React, useEffect, useState } from "react";
-import { Box, Typography } from "@mui/material";
 import ArticleTable from "../components/Table";
 import { tableColumns } from "../components/TableColumns";
-//import { ViewArticle } from '../Express';
 import axios from "axios";
 import { config } from "../Config";
 
-import {CircularProgress, Autocomplete, TextField, Grid} from "@mui/material";
+import {Box, TextField, Grid} from "@mui/material";
 
 
 /**
@@ -87,48 +85,5 @@ useEffect(() => {
       </Grid>
     </Box>
   </Box>
-
-    // <Box
-    // sx={{
-    //   bgcolor: "#fff",
-    //   margin: "12px",
-    //   padding: "16px",
-    //   display: "flex",
-    //   flexDirection: "column",
-    //   alignItems: "center",
-    // }}
-    // >
-    //   <h1>Articles</h1>
-    //   {!article.length ? (
-    //     <>
-    //       <CircularProgress />
-    //       <Typography>No Connection to backend</Typography>
-    //     </>
-    //   ) : (
-    //     <Box> 
-    //     <Grid container spacing={2}>
-    //       <Grid item xs={6}>
-    //       <Typography>publication Year:</Typography>
-    //         <TextField    
-    //       value={filteredYear}
-    //       id="year"
-    //       name="year"
-    //       onChange={(event) => setFilteredYear(event.target.value)}
-    //       autocomplete="off"
-    //         ></TextField>
-    //      </Grid>
-    //       <Grid item xs={6}>
-
-
-    //       </Grid>
-          
-    //       <Grid item xs={12}>
-          
-    //       <ArticleTable data={filteredItem} columns={tableColumns} /> 
-    //       </Grid>
-    //       </Grid>
-    //     </Box>
-    //   )}
-    // </Box>
   );
 }
