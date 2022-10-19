@@ -1,13 +1,7 @@
 import { React } from "react";
 import {
   Box,
-  Typography,
-  TableBody,
-  TableRow,
-  TableHead,
-  TableCell,
-  Paper,
-  Table,
+  Typography
 } from "@mui/material";
 
 /**
