@@ -22,7 +22,7 @@ export default function ViewArticles() {
   // find article by practice
 
 const filteredItem = article.filter(item => {
-  return item.publication_year.toString().toLowerCase().includes(filteredYear.toLowerCase());
+  return item.publication_year.toString().toLowerCase().includes(filteredYear.toString().toLowerCase());
 })
 
 /**
@@ -36,18 +36,20 @@ useEffect(() => {
   
   getArticle();
 }, []);
+  
+/*
+<Autocomplete
+        id=""
+        freeSolo
+        onChange={(e) => setFilteredYear(e)}
+        options={article.sort(
+          (a, b) => -b.publication_year.localeCompare(a.publication_year)
+          ).map((option) => option.publication_year)}
+          renderInput={(params) => 
+*/
 
-//this is to grab the data entered from the user and set it into the year state
-// function onChangeYear(event) {
-  //   const value = event.target.value;
-  //   setFilteredYear(article.filter(article =>
-  //       article.toLowerCase().includes(value.toLowerCase()))
-  //       ) 
-  //     }
-  
-  
-  
-  
+
+
   // the article map is used to display each column on the data that is stored in the collection
   // note for columns that do not store data it will be displayed as empty currently
   return (
@@ -60,48 +62,73 @@ useEffect(() => {
       flexDirection: "column",
       alignItems: "center",
     }}
-    >
-      <h1>Articles</h1>
-      {!article.length ? (
-        <>
-          <CircularProgress />
-          <Typography>No Connection to backend</Typography>
-        </>
-      ) : (
-        <Box> 
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
-          {/* <label htmlFor="yeFar">Publication Year: </label> */}
-            <Autocomplete
-        id=""
-        freeSolo
-        onChange={(e) => setFilteredYear(e)}
-        options={article.sort(
-          (a, b) => -b.publication_year.localeCompare(a.publication_year)
-          ).map((option) => option.publication_year)}
-          renderInput={(params) => <TextField {...params}   
-          
+  >
+    <h1>View Articles</h1>
+    <Box>
+      <Grid
+      container
+      direction="row"
+      justifyContent="center"
+      alignItems="center"
+    > 
+        <Grid>
+        <TextField    
           value={filteredYear}
           id="year"
           name="year"
+          label="Search Articles"
           onChange={(event) => setFilteredYear(event.target.value)}
-            />}
-            noOptionsText={"No results found"}
-        />
-         </Grid>
-          <Grid item xs={6}>
-        <TextField/>
-        <input type="text" id="year" name="year" ></input>
-
-          </Grid>
-          
-          <Grid item xs={12}>
-          
-          <ArticleTable data={filteredItem} columns={tableColumns} /> 
-          </Grid>
-          </Grid>
-        </Box>
-      )}
+          autocomplete="off"
+            ></TextField>
+        </Grid>
+        <Grid item xs={12}>
+          <ArticleTable data={filteredItem} columns={tableColumns} />
+        </Grid>
+      </Grid>
     </Box>
+  </Box>
+
+    // <Box
+    // sx={{
+    //   bgcolor: "#fff",
+    //   margin: "12px",
+    //   padding: "16px",
+    //   display: "flex",
+    //   flexDirection: "column",
+    //   alignItems: "center",
+    // }}
+    // >
+    //   <h1>Articles</h1>
+    //   {!article.length ? (
+    //     <>
+    //       <CircularProgress />
+    //       <Typography>No Connection to backend</Typography>
+    //     </>
+    //   ) : (
+    //     <Box> 
+    //     <Grid container spacing={2}>
+    //       <Grid item xs={6}>
+    //       <Typography>publication Year:</Typography>
+    //         <TextField    
+    //       value={filteredYear}
+    //       id="year"
+    //       name="year"
+    //       onChange={(event) => setFilteredYear(event.target.value)}
+    //       autocomplete="off"
+    //         ></TextField>
+    //      </Grid>
+    //       <Grid item xs={6}>
+
+
+    //       </Grid>
+          
+    //       <Grid item xs={12}>
+          
+    //       <ArticleTable data={filteredItem} columns={tableColumns} /> 
+    //       </Grid>
+    //       </Grid>
+    //     </Box>
+    //   )}
+    // </Box>
   );
 }
