@@ -143,12 +143,12 @@ const ArticleTable = ({
                 {selectedArticle ? (
                   <ArticleSummary
                     title={selectedArticle.title}
-                    authors={selectedArticle.authors}
+                    authors={selectedArticle.author}
                     source={selectedArticle.source}
-                    pubyear={selectedArticle.pubyear}
+                    pubyear={selectedArticle.publication_year}
                     doi={selectedArticle.doi}
-                    claim={selectedArticle.claim}
-                    evidence={selectedArticle.evidence}
+                    claim={selectedArticle.claimed_benefit}
+                    evidence={selectedArticle.level_of_evidence}
                     isAnalyst={isAnalyst}
                   />
                 ) : (
