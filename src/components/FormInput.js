@@ -7,7 +7,7 @@ import { Typography, Box, Grid } from "@mui/material";
  * @param {*} props question data
  */
 export default function FormInput(props) {
-  const [inputSettings, setInputSettings] = useState({});
+  const [inputSettings, setInputSettings] = useState({input : ""});
 
   useEffect(() => {
     setInputSettings({
