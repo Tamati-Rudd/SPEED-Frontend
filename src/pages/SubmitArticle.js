@@ -1,18 +1,27 @@
-import { useState, React } from "react";
+import { useEffect, useState, React } from "react";
 import FormInput from "../components/FormInput";
 import { FormQuestions } from "../components/FormQuestions";
 import { submitArticle } from "../services/Express";
 import { Box, Button, Stack } from "@mui/material";
 import bibtexParse from "bibtex-parse-js";
+import { useNavigate } from "react-router-dom";
 
 /**
  * This page handles the entry and submission of article details
  * @returns page components
  */
 export default function SubmitArticle() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+  console.log(FormQuestions);
+  const [questions, setquestions] = useState([]);
 
-  const [questions, setquestions] = useState(FormQuestions);
+  useEffect(() => {
+    let cleanquestions = FormQuestions.map((f) => {
+      f.input = "";
+      return f;
+    });
+    setquestions(cleanquestions);
+  }, []);
 
   /**
    * Handle pressing of the submit button
@@ -51,7 +60,7 @@ export default function SubmitArticle() {
       submitArticle(articleData)
         .then(() => {
           alert("Your article has been submitted for review!");
-          //navigate("/home");
+          navigate("/home");
         })
         .catch((err) => {
           alert(
