@@ -7,7 +7,7 @@ import { Typography, Box, Grid } from "@mui/material";
  * @param {*} props question data
  */
 export default function FormInput(props) {
-  const [inputSettings, setInputSettings] = useState({input : ""});
+  const [inputSettings, setInputSettings] = useState({ input: "" });
 
   useEffect(() => {
     setInputSettings({
@@ -44,7 +44,6 @@ export default function FormInput(props) {
     props.question["input"] = inputSettings.input;
   }, [inputSettings, props.question]);
 
-
   return (
     <Box sx={{ flexGrow: 1 }} className="FormInputDiv">
       <Grid container spacing={3} columns={16}>
@@ -56,13 +55,13 @@ export default function FormInput(props) {
         </Grid>
         <Grid item xs={8}>
           <TextField
-            id={inputSettings.field} 
+            id={inputSettings.field}
             name={inputSettings.field}
             title={inputSettings.field}
             type={inputSettings.type}
             size="75"
             placeholder={inputSettings.placeholder}
-            value={inputSettings.input}// user input
+            value={inputSettings.input} // user input
             required={inputSettings.required}
             disabled={inputSettings.disabled}
             onChange={handleInputChange}

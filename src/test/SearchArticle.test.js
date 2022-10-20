@@ -2,10 +2,10 @@
 const serachArticles = require('./SearchArticle');
 
 
-//title: would be where the article would be outputted 
-// tobedefied is making sure that the searchArticle has data comming out
-// and that the function used has data
-test("article is found",() => {
-expect(serachArticles("title: Today")).toBeDefined();
+//Search: test is to search for the year in the articles
+//serach article is example of the users input
+//toMatch is to check in the database and see if there is a match with the user input
+test("Year is found",() => {
+expect(serachArticles("2019")).toMatch('2019');
 })
 
