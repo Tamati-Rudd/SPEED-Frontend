@@ -1,8 +1,5 @@
 import { React } from "react";
-import {
-  Box,
-  Typography
-} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 /**
  * Home page for the SPEED website
@@ -25,7 +22,7 @@ export default function Home() {
       <Typography variant="h3" style={{ color: "black" }}>
         Welcome to SPEED!
       </Typography>
-      <img src={require('../Home.png')} alt="a" width="1700" height="900"></img>
+      <img src={require("../Home.png")} alt="a" width="1700" height="900"></img>
     </Box>
   );
 }

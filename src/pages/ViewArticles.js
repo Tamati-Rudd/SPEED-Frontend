@@ -4,8 +4,7 @@ import { tableColumns } from "../components/TableColumns";
 import axios from "axios";
 import { config } from "../Config";
 
-import {Box, TextField, Grid} from "@mui/material";
-
+import { Box, TextField, Grid } from "@mui/material";
 
 /**
  * Page for searching and viewing articles in SPEED
@@ -17,73 +16,78 @@ export default function ViewArticles() {
 
   //find article by year
   const [filteredYear, setFilteredYear] = useState("");
-  // find article by practice
 
-const filteredItem = article.filter(item => {
-  return item.publication_year.toString().toLowerCase().includes(filteredYear.toString().toLowerCase());
-})
+  /*
+   *filters the article by checking if the publication year of the article is within a certain range
+   */
+  const filteredItem = article.filter((item) => {
+    return item.publication_year
+      .toString()
+      .toLowerCase()
+      .includes(filteredYear.toString().toLowerCase()); // compares user input against the publication year in data
+  });
 
-/**
- * Retrieve article data when the year input changes
- */
-useEffect(() => {
-  const getArticle = async () => {
-    const res = await axios.get(`${config.expressUrls.VIEW_ARTICLE}`);
-    setArticle(res.data);
-  };
-  
-  getArticle();
-}, []);
-  
-/*
+  /**
+   * Retrieve article data when the year input changes
+   */
+  useEffect(() => {
+    const getArticle = async () => {
+      const res = await axios.get(`${config.expressUrls.VIEW_ARTICLE}`); //function to return all of its data at once
+      setArticle(res.data); //sets the data retrieved from axios
+    };
+
+    getArticle();
+  }, []);
+
+  /*
+WIP:
+filter the articles by year and sort them in descending order
 <Autocomplete
         id=""
         freeSolo
-        onChange={(e) => setFilteredYear(e)}
+        onChange={(e) => setFilteredYear(e)} //onChange event to update the filtered year based on user input
         options={article.sort(
-          (a, b) => -b.publication_year.localeCompare(a.publication_year)
-          ).map((option) => option.publication_year)}
+          (a, b) => -b.publication_year.localeCompare(a.publication_year) // filter the articles by year and sort them in descending order
+          ).map((option) => option.publication_year)} //filter articles by publication year, and then map each option's publication_year
           renderInput={(params) => 
 */
-
-
 
   // the article map is used to display each column on the data that is stored in the collection
   // note for columns that do not store data it will be displayed as empty currently
   return (
     <Box
-    sx={{
-      bgcolor: "#fff",
-      margin: "12px",
-      padding: "16px",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-    }}
-  >
-    <h1>View Articles</h1>
-    <Box>
-      <Grid
-      container
-      direction="row"
-      justifyContent="center"
-      alignItems="center"
-    > 
-        <Grid>
-        <TextField    
-          value={filteredYear}
-          id="year"
-          name="year"
-          label="Search Articles"
-          onChange={(event) => setFilteredYear(event.target.value)}
-          autocomplete="off"
+      sx={{
+        bgcolor: "#fff",
+        margin: "12px",
+        padding: "16px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <h1>View Articles</h1>
+      <Box>
+        <Grid
+          container
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Grid>
+            <TextField
+              value={filteredYear}
+              id="year"
+              name="year"
+              label="Search Articles"
+              onChange={(event) => setFilteredYear(event.target.value)}
+              autocomplete="off"
             ></TextField>
+          </Grid>
+          <Grid item xs={12}>
+            <ArticleTable data={filteredItem} columns={tableColumns} />
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <ArticleTable data={filteredItem} columns={tableColumns} />
-        </Grid>
-      </Grid>
+      </Box>
     </Box>
-  </Box>
   );
 }
