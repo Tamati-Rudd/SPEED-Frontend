@@ -44,19 +44,23 @@ export async function ViewArticle() {
     }
 }
 
-export async function moderateArticle(articleData) {
-    let data = { "title": articleData }
-    try {
-        let response = await axios.get(config.expressUrls.MODERATE_VIEW_ARTICLE, data, { timeout: 10000 });
-        if (response.status === 201) {
-            return 0;
-        }
-    } catch (error) { //500 or other error
-        console.error(error);
-        console.error("Network or server error");
-        return 1;
-    }
-}
+/**
+ * Accept an article 
+ * @param {*} id id of the accepted article
+ * @returns 
+ */
+ export const acceptArticle = async (id) => {
+    return axios.get(`${config.expressUrls.ACCEPT_ARTICLE}/${id}`);
+  };
+  
+  /**
+   * Reject an article
+   * @param {*} id id of the accepted article
+   * @returns 
+   */
+  export const deleteArticle = async (id) => {
+    return axios.get(`${config.expressUrls.REJECT_ARTICLE}/${id}`);
+  };
 
 /**
  * Retrieve all accepted articles for analysis

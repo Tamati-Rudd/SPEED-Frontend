@@ -1,5 +1,5 @@
 /**
- * The below JSON data is used to build the form questions used for article information input
+ * The below JSON data is used to build the form questions used for article information input on the submit and analysis pages
  */
 
 export const FormQuestions = [

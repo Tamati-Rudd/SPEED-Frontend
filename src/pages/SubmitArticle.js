@@ -51,6 +51,7 @@ export default function SubmitArticle() {
       }
     });
 
+    //If validation passed
     if (valid) {
       articleData.se_practice = "";
       articleData.claimed_benefit = "";
@@ -72,6 +73,10 @@ export default function SubmitArticle() {
     }
   };
 
+  /**
+   * Handle uploading of a bibtex file
+   * @param {} e event handler
+   */
   function handleFileUpload(e) {
     let file = e.target.files[0];
     let fileReader = new FileReader();

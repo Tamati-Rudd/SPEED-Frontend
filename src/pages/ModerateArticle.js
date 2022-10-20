@@ -3,13 +3,10 @@ import { Box, Snackbar, Alert, Typography } from "@mui/material";
 import ArticleTable from "../components/Table";
 import { moderatorTableColumns } from "../components/TableColumns";
 import axios from "axios";
-import { deleteArticle, acceptArticle } from "../services/articlesService";
+import { deleteArticle, acceptArticle } from "../services/Express";
 import { config } from "../Config";
 
 const ModerateArticle = () => {
-  // Current URL state
-  // const [, setSelectedUrl] = useContext(CurrentUrlContext);
-  // const [, setCurrentUser] = useContext(CurrentUserContext);
   const [moderationLoading, setModerationLoading] = useState(false);
 
   // Feedback state for Snackbar
@@ -22,17 +19,14 @@ const ModerateArticle = () => {
   // Loading states
   const [isLoading, setIsLoading] = useState(true);
 
+  /**
+   * On page render, retrieve articles for moderation
+   */
   useEffect(() => {
     axios.get(`${config.expressUrls.MODERATE_VIEW_ARTICLE}`).then((res) => {
       setArticles(res.data);
       setIsLoading(false);
     });
-    //WIP: catching database errors but not needed
-    // .catch((err) => {
-    //   console.error(err);
-    //   alert("database is not connected");
-    //   setIsLoading(true);
-    // });
   }, []);
 
   /*
@@ -61,7 +55,6 @@ const ModerateArticle = () => {
         setFeedback("Article has been accepted");
         setIsFeedbackError(false);
         deleteArticleFromState(id);
-        //alert("Article has been accepted");
       })
       .catch((data) => {
         setFeedback(data.response.data.error);
@@ -88,7 +81,6 @@ const ModerateArticle = () => {
         setFeedback("Article has been rejected");
         setIsFeedbackError(false);
         deleteArticleFromState(id);
-        //alert("Article has been rejected");
       })
       .catch((data) => {
         setFeedback(data.response.data.error);

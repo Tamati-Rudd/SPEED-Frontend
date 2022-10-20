@@ -3,7 +3,7 @@ import TextField from "@mui/material/TextField";
 import { Typography, Box, Grid } from "@mui/material";
 
 /**
- * This reusable component manages a single form input
+ * This reusable component manages a single form input on the submit and analysis pages
  * @param {*} props question data
  */
 export default function FormInput(props) {

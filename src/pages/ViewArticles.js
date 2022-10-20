@@ -39,21 +39,6 @@ export default function ViewArticles() {
     getArticle();
   }, []);
 
-  /*
-WIP:
-filter the articles by year and sort them in descending order
-<Autocomplete
-        id=""
-        freeSolo
-        onChange={(e) => setFilteredYear(e)} //onChange event to update the filtered year based on user input
-        options={article.sort(
-          (a, b) => -b.publication_year.localeCompare(a.publication_year) // filter the articles by year and sort them in descending order
-          ).map((option) => option.publication_year)} //filter articles by publication year, and then map each option's publication_year
-          renderInput={(params) => 
-*/
-
-  // the article map is used to display each column on the data that is stored in the collection
-  // note for columns that do not store data it will be displayed as empty currently
   return (
     <Box
       sx={{
@@ -78,7 +63,7 @@ filter the articles by year and sort them in descending order
               value={filteredYear}
               id="year"
               name="year"
-              label="Search Articles"
+              label="Search by Publication Year"
               onChange={(event) => setFilteredYear(event.target.value)}
               autocomplete="off"
             ></TextField>

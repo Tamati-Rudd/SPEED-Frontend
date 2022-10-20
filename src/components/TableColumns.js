@@ -1,4 +1,6 @@
-// eslint-disable-next-line no-sparse-arrays
+/**
+ * Columns for the React Tables used on the moderator and search pages
+ */
 export const tableColumns = [
   {
     id: "title",

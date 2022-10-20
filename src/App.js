@@ -7,7 +7,7 @@ import SubmitArticle from './pages/SubmitArticle';
 import ModerateArticle from './pages/ModerateArticle';
 import AnalyseArticle from './pages/AnalyseArticle';
 import './App.css';
-import ResponsiveAppBar from './components/Nav';
+import ResponsiveAppBar from './components/ResponsiveAppBar';
 
 /**
  * Main page of the SPEED application
